@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6671973041834095932}
   - component: {fileID: 8472187781793968132}
   - component: {fileID: 300929970715632282}
+  - component: {fileID: 6403434300785514638}
   m_Layer: 0
   m_Name: ReceptionDesk
   m_TagString: Untagged
@@ -84,6 +85,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!208 &6403434300785514638
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6132961398521571014}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.75000006, y: 0.35700002, z: 0.6}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.358, z: 0.23}
+  m_TimeToStationary: 0.5
 --- !u!1001 &2350782124924773744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -115,7 +132,7 @@ PrefabInstance:
     - target: {fileID: 8057967652904156405, guid: d3de61ae5191eab4fb57668997463132,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.217
+      value: 0.006
       objectReference: {fileID: 0}
     - target: {fileID: 8057967652904156405, guid: d3de61ae5191eab4fb57668997463132,
         type: 3}
@@ -125,7 +142,7 @@ PrefabInstance:
     - target: {fileID: 8057967652904156405, guid: d3de61ae5191eab4fb57668997463132,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.762
+      value: 0.624
       objectReference: {fileID: 0}
     - target: {fileID: 8057967652904156405, guid: d3de61ae5191eab4fb57668997463132,
         type: 3}
@@ -162,7 +179,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6093191648409135975, guid: d3de61ae5191eab4fb57668997463132, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
