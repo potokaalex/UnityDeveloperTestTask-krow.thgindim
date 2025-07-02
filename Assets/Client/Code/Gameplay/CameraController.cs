@@ -34,6 +34,7 @@ namespace Client.Code.Gameplay
             var areaCenter = new Vector3(PositionMin.x + PositionMax.x, 0f, PositionMin.y + PositionMax.y) / 2;
             var areaSize = new Vector3(PositionMax.x - PositionMin.x, 0f, PositionMax.y - PositionMin.y);
             Gizmos.DrawWireCube(areaCenter, areaSize);
+            Gizmos.color = Color.white;
         }
 
         private void WritePositionInput()
