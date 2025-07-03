@@ -9,14 +9,17 @@ namespace Client.Code.Gameplay.Home
 {
     public class HomeWindow : MonoBehaviour
     {
+        public TextMeshProUGUI Score;
         public TextMeshProUGUI Gold;
         public BuyPanel BuyCustomerTable;
         private readonly CompositeDisposable _disposable = new();
         private PlayerInventory _playerInventory;
         private CustomerZoneController _customerZoneController;
+        private PlayerScore _playerScore;
 
-        public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController)
+        public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController, PlayerScore playerScore)
         {
+            _playerScore = playerScore;
             _customerZoneController = customerZoneController;
             _playerInventory = playerInventory;
         }
@@ -25,6 +28,7 @@ namespace Client.Code.Gameplay.Home
         {
             _playerInventory.OnChanged.Subscribe(UpdateView).AddTo(_disposable);
             _customerZoneController.OnTableBuild.Subscribe(UpdateView).AddTo(_disposable);
+            _playerScore.OnScoreChanged.Subscribe(UpdateView).AddTo(_disposable);
             BuyCustomerTable.BuyButton.OnClick.Subscribe(() => _customerZoneController.BuildTable()).AddTo(_disposable);
             UpdateView();
         }
@@ -33,8 +37,11 @@ namespace Client.Code.Gameplay.Home
 
         private void UpdateView()
         {
+            Score.SetText($"Score: {_playerScore.Score}");
+            
             var gold = _playerInventory.Get(InventoryItemType.Gold);
             Gold.SetText($"Gold: {gold.Count}");
+         
             BuyCustomerTable.Description.SetText(
                 $"CustomerTables: {_customerZoneController.TablesAliveCount}/{_customerZoneController.TablesMaxCount}");
             BuyCustomerTable.Price.SetText(_customerZoneController.TableBuildPrice.Count.ToString());

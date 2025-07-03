@@ -11,6 +11,7 @@ namespace Client.Code.Gameplay.CustomerZone
     public class CustomerZoneController : MonoBehaviour, IProgressWriter
     {
         public List<CustomerTableController> Tables;
+        private PlayerScore _playerScore;
 
         public int TablesAliveCount => Tables.Count(x => x.IsAlive);
 
@@ -20,8 +21,9 @@ namespace Client.Code.Gameplay.CustomerZone
 
         public EventAction OnTableBuild { get; } = new();
 
-        public void Construct(IProgressProvider progressProvider)
+        public void Construct(IProgressProvider progressProvider, PlayerScore playerScore)
         {
+            _playerScore = playerScore;
             for (var i = 0; i < Tables.Count; i++)
                 Tables[i].Construct(progressProvider);
         }
@@ -46,6 +48,7 @@ namespace Client.Code.Gameplay.CustomerZone
             if (TablesAliveCount < TablesMaxCount)
             {
                 Tables.First(x => !x.IsAlive).Build();
+                _playerScore.Add(3);
                 OnTableBuild.Invoke();
             }
         }

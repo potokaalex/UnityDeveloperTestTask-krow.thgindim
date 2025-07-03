@@ -7,5 +7,6 @@ namespace Client.Code.Gameplay.Player
     public class PlayerProgressData
     {
         public List<InventoryItem> InventoryItems = new();
+        public float Score;
     }
 }

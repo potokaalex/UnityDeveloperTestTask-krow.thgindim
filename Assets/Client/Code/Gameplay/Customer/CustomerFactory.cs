@@ -17,7 +17,8 @@ namespace Client.Code.Gameplay.Customer
             var controller = Object.Instantiate(prefab, root, true);
             controller.transform.position = position;
             controller.Construct(_serviceLocator.Get<RestaurantController>(), _serviceLocator.Get<CameraController>(),
-                _serviceLocator.Get<KitchenController>(), _serviceLocator.Get<PlayerInventory>(), areaMin, areaMax);
+                _serviceLocator.Get<KitchenController>(), _serviceLocator.Get<PlayerInventory>(), _serviceLocator.Get<PlayerScore>(), 
+                areaMin, areaMax);
             controller.Initialize();
             _serviceLocator.Get<CustomersContainer>().Add(controller);
         }

@@ -29,6 +29,12 @@ namespace Client.Code.Gameplay
 
             _progressProvider = new ProgressController();
             
+            var playerInventory = new PlayerInventory(_progressProvider);
+            serviceLocator.Register<PlayerInventory>(playerInventory);
+
+            var playerScore = new PlayerScore(_progressProvider);
+            serviceLocator.Register<PlayerScore>(playerScore);
+            
             serviceLocator.Register<CameraController>(CameraController);
             serviceLocator.Register<RestaurantController>(RestaurantController);
             KitchenController.Construct(CameraController);
@@ -41,20 +47,20 @@ namespace Client.Code.Gameplay
             CustomerSpawner.Construct(customerFactory);
 
             _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, CustomerZoneController);
-            CustomerZoneController.Construct(_progressProvider);
+            CustomerZoneController.Construct(_progressProvider, playerScore);
             
-            var playerInventory = new PlayerInventory(_progressProvider);
-            serviceLocator.Register<PlayerInventory>(playerInventory);
             _playerRaycaster = new PlayerRaycaster(CameraController);
 
-            HomeWindow.Construct(playerInventory, CustomerZoneController);
+            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore);
 
             //init
             _progressProvider.Initialize();
             _progressProvider.RegisterActor(playerInventory);
+            _progressProvider.RegisterActor(playerScore);
             _progressProvider.RegisterActor(CustomerZoneController);
             
             playerInventory.Initialize();
+            playerScore.Initialize();
             KitchenController.Initialize();
             CustomerZoneController.Initialize();
             CustomerSpawner.Initialize();

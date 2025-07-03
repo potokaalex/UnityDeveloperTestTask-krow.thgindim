@@ -27,16 +27,18 @@ namespace Client.Code.Gameplay.Customer
         private PlayerInventory _playerInventory;
         private CustomerHelper _helper;
         private FoodCreationOrder _currentOrder;
+        private PlayerScore _playerScore;
         private INode _tree;
 
         public bool CanGoRestaurant => !_helper.GoingToRestaurant;
 
         public void Construct(RestaurantController restaurantController, CameraController cameraController, KitchenController kitchenController,
-            PlayerInventory playerInventory, Vector3 areaMin, Vector3 areaMax)
+            PlayerInventory playerInventory,PlayerScore playerScore, Vector3 areaMin, Vector3 areaMax)
         {
             _playerInventory = playerInventory;
             _kitchenController = kitchenController;
             _restaurantController = restaurantController;
+            _playerScore = playerScore;
             ToCameraRotator.Construct(cameraController);
             _helper = new CustomerHelper(NavMeshAgent);
             _wanderingNode = new CustomerWanderingNode(_helper, areaMin, areaMax);
@@ -141,6 +143,7 @@ namespace Client.Code.Gameplay.Customer
                         GiveMoneyIndicator.SetActive(false);
                         _customerTable.Clear();
                         _playerInventory.Add(new InventoryItem(InventoryItemType.Gold, 1));
+                        _playerScore.Add(1);
                         return true;
                     }
 
