@@ -33,7 +33,7 @@ namespace Client.Code.Gameplay.Customer
         public bool CanGoRestaurant => !_helper.GoingToRestaurant;
 
         public void Construct(RestaurantController restaurantController, CameraController cameraController, KitchenController kitchenController,
-            PlayerInventory playerInventory,PlayerScore playerScore, Vector3 areaMin, Vector3 areaMax)
+            PlayerInventory playerInventory, PlayerScore playerScore, Vector3 areaMin, Vector3 areaMax)
         {
             _playerInventory = playerInventory;
             _kitchenController = kitchenController;
@@ -104,8 +104,19 @@ namespace Client.Code.Gameplay.Customer
         private INode WaitOrder()
         {
             return new SequenceNode(
-                new ActionNode(TimerView.Show),
-                new TimerNode(() => _currentOrder.CookingTime, t => { TimerView.View(_currentOrder.CookingTime, t); }, TimerView.Hide)
+                new WaitUntilNode(() =>
+                {
+                    if (_currentOrder.ProgressTime > 0)
+                        TimerView.Show();
+                    TimerView.View(_currentOrder.CookingTime, _currentOrder.ProgressTime);
+                    if (_currentOrder.IsReady)
+                    {
+                        TimerView.Hide();
+                        return true;
+                    }
+
+                    return false;
+                })
             );
         }
 
