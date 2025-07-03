@@ -1,6 +1,4 @@
-﻿using Client.Code.Gameplay.Customer;
-
-namespace Client.Code.Core.BehaviorTree
+﻿namespace Client.Code.Core.BehaviorTree
 {
     public readonly struct RepeatNode : INode
     {

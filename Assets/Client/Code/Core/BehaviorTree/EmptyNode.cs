@@ -1,4 +1,4 @@
-﻿namespace Client.Code.Gameplay.Customer
+﻿namespace Client.Code.Core.BehaviorTree
 {
     public struct EmptyNode : INode
     {

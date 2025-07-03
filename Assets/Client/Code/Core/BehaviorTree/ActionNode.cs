@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Client.Code.Gameplay.Customer
+namespace Client.Code.Core.BehaviorTree
 {
     public readonly struct ActionNode : INode
     {

@@ -14,7 +14,7 @@ namespace Client.Code.Bootstrap
             configsController.Initialize();
 
             var sceneLoader = new SceneLoader(configsController);
-            
+
             sceneLoader.LoadScene(SceneName.Gameplay);
         }
     }

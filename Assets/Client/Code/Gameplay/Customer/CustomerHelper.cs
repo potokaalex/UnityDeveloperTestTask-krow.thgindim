@@ -1,4 +1,5 @@
 ﻿using System;
+using Client.Code.Core.BehaviorTree;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,7 +12,7 @@ namespace Client.Code.Gameplay.Customer
         public CustomerHelper(NavMeshAgent agent) => _agent = agent;
 
         public bool GoingToRestaurant { get; set; } //It is better to make a model with data, like CustomerModel : MonoBehaviour
-        
+
         public bool AgentAtTarget() => (_agent.destination - _agent.transform.position).magnitude < 0.1f;
 
         public INode MoveTo(Func<Vector3> getPoint)

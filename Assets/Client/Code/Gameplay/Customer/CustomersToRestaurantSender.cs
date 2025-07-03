@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -19,9 +20,9 @@ namespace Client.Code.Gameplay.Customer
         {
             using var d = ListPool<CustomerController>.Get(out var controllers);
             _container.GetAll(controllers);
-            if (controllers.Count < 0) 
+            if (controllers.Count < 0)
                 return;
-            
+
             while (_restaurantController.HasEmptyTable() && controllers.Any(x => x.CanGoRestaurant))
             {
                 var index = Random.Range(0, controllers.Count);

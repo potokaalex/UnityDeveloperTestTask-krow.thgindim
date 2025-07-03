@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Client.Code.Gameplay.Customer
+namespace Client.Code.Core
 {
     public class TimerView : MonoBehaviour
     {
         public Slider Slider;
-        
+
         public void View(float max, float current)
         {
             Slider.maxValue = max;

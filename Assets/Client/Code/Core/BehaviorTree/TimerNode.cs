@@ -1,26 +1,25 @@
 ﻿using System;
-using Client.Code.Gameplay.Customer;
 using UnityEngine;
 
 namespace Client.Code.Core.BehaviorTree
 {
     public class TimerNode : INode
     {
-        private readonly float _initialTime;
+        private readonly Func<float> _getInitialTime;
         private readonly Action<float> _onTimeTick;
         private readonly Action _onEnd;
         private float _time;
 
-        public TimerNode(float initialTime, Action<float> onTimeTick, Action onEnd)
+        public TimerNode(Func<float> getInitialTime, Action<float> onTimeTick, Action onEnd)
         {
-            _initialTime = initialTime;
+            _getInitialTime = getInitialTime;
             _onTimeTick = onTimeTick;
             _onEnd = onEnd;
         }
 
         public NodeState Tick()
         {
-            if (_time >= _initialTime)
+            if (_time >= _getInitialTime.Invoke())
             {
                 _onEnd.Invoke();
                 _time = 0;

@@ -1,5 +1,7 @@
 ﻿using Client.Code.Core;
 using Client.Code.Core.BehaviorTree;
+using Client.Code.Gameplay.Kitchen;
+using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,18 +15,21 @@ namespace Client.Code.Gameplay.Customer
         public TimerView TimerView;
         public ToCameraRotator ToCameraRotator;
         public float CreateOrderTime;
-        public float WaitOrderTime;
         public float EatTime;
         private RestaurantController _restaurantController;
+        private KitchenController _kitchenController;
         private RestaurantCustomerTableController _customerTable;
         private CustomerWanderingNode _wanderingNode;
         private CustomerHelper _helper;
+        private FoodCreationOrder _currentOrder;
         private INode _tree;
 
         public bool CanGoRestaurant => !_helper.GoingToRestaurant;
 
-        public void Construct(RestaurantController restaurantController, CameraController cameraController, Vector3 areaMin, Vector3 areaMax)
+        public void Construct(RestaurantController restaurantController, CameraController cameraController, KitchenController kitchenController,
+            Vector3 areaMin, Vector3 areaMax)
         {
+            _kitchenController = kitchenController;
             _restaurantController = restaurantController;
             ToCameraRotator.Construct(cameraController);
             _helper = new CustomerHelper(NavMeshAgent);
@@ -37,7 +42,7 @@ namespace Client.Code.Gameplay.Customer
             GiveMoneyIndicator.SetActive(false);
             TimerView.Hide();
             _wanderingNode.Initialize();
-            
+
             _tree = new RepeatNode(new SequenceNode(
                 _wanderingNode,
                 EnterRestaurant(),
@@ -72,17 +77,17 @@ namespace Client.Code.Gameplay.Customer
             );
         }
 
-        private INode MoveToCooks() => _helper.MoveTo(() => _restaurantController.CooksPoint.position);
+        private INode MoveToCooks() => _helper.MoveTo(() => _kitchenController.CooksPoint.position);
 
         private INode CreateOrder()
         {
             return new SequenceNode(
                 new ActionNode(TimerView.Show),
-                new TimerNode(CreateOrderTime, t =>
+                new TimerNode(() => CreateOrderTime, t => { TimerView.View(CreateOrderTime, t); }, () =>
                 {
-                    TimerView.View(CreateOrderTime, t);
-                    _restaurantController.CreateOrder();
-                }, TimerView.Hide)
+                    TimerView.Hide();
+                    _currentOrder = _kitchenController.CreateOrder();
+                })
             );
         }
 
@@ -92,7 +97,7 @@ namespace Client.Code.Gameplay.Customer
         {
             return new SequenceNode(
                 new ActionNode(TimerView.Show),
-                new TimerNode(WaitOrderTime, t => { TimerView.View(WaitOrderTime, t); }, TimerView.Hide)
+                new TimerNode(() => _currentOrder.CookingTime, t => { TimerView.View(_currentOrder.CookingTime, t); }, TimerView.Hide)
             );
         }
 
@@ -106,7 +111,7 @@ namespace Client.Code.Gameplay.Customer
                     FoodTray.SetActive(false);
                     TimerView.Show();
                 }),
-                new TimerNode(EatTime, t => { TimerView.View(EatTime, t); }, TimerView.Hide)
+                new TimerNode(() => EatTime, t => { TimerView.View(EatTime, t); }, TimerView.Hide)
             );
         }
 

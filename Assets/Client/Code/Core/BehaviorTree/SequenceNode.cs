@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Client.Code.Gameplay.Customer
+namespace Client.Code.Core.BehaviorTree
 {
     public class SequenceNode : INode
     {
