@@ -1,37 +1,124 @@
-﻿using UnityEngine;
+﻿using Client.Code.Core;
+using Client.Code.Core.BehaviorTree;
+using UnityEngine;
 using UnityEngine.AI;
-using Random = UnityEngine.Random;
 
 namespace Client.Code.Gameplay.Customer
 {
     public class CustomerController : MonoBehaviour
     {
         public NavMeshAgent NavMeshAgent;
-        private bool _isRight;
-        private Vector3 _areaMin;
-        private Vector3 _areaMax;
+        public GameObject FoodTray;
+        public GameObject GiveMoneyIndicator;
+        public TimerView TimerView;
+        public ToCameraRotator ToCameraRotator;
+        public float CreateOrderTime;
+        public float WaitOrderTime;
+        public float EatTime;
+        private RestaurantController _restaurantController;
+        private RestaurantCustomerTableController _customerTable;
+        private CustomerWanderingNode _wanderingNode;
+        private CustomerHelper _helper;
+        private INode _tree;
 
-        public void Initialize(Vector3 areaMin, Vector3 areaMax)
+        public bool CanGoRestaurant => !_helper.GoingToRestaurant;
+
+        public void Construct(RestaurantController restaurantController, CameraController cameraController, Vector3 areaMin, Vector3 areaMax)
         {
-            _areaMin = areaMin;
-            _areaMax = areaMax;
-            _isRight = Random.value > 0.5f;
-            SetDestination();
+            _restaurantController = restaurantController;
+            ToCameraRotator.Construct(cameraController);
+            _helper = new CustomerHelper(NavMeshAgent);
+            _wanderingNode = new CustomerWanderingNode(_helper, areaMin, areaMax);
         }
 
-        private void Update()
+        public void Initialize()
         {
-            if ((NavMeshAgent.destination - transform.position).magnitude < 0.01f)
+            FoodTray.SetActive(false);
+            GiveMoneyIndicator.SetActive(false);
+            TimerView.Hide();
+            _wanderingNode.Initialize();
+            
+            _tree = new RepeatNode(new SequenceNode(
+                _wanderingNode,
+                EnterRestaurant(),
+                MoveToCooks(),
+                CreateOrder(),
+                MoveToTable(),
+                WaitOrder(),
+                MoveToCooks(),
+                GetOrder(),
+                MoveToTable(),
+                Eat(),
+                GiveMoney(),
+                LeaveRestaurant()
+            ));
+        }
+
+        public void Update() => _tree.Tick();
+
+        public void GoRestaurant(RestaurantCustomerTableController customerTable)
+        {
+            _customerTable = customerTable;
+            _helper.GoingToRestaurant = true;
+        }
+
+        private INode EnterRestaurant() => _helper.MoveTo(() => _restaurantController.EnterPoint.position);
+
+        private INode LeaveRestaurant()
+        {
+            return new SequenceNode(
+                _helper.MoveTo(() => _restaurantController.ExitPoint.position),
+                new ActionNode(() => _helper.GoingToRestaurant = false)
+            );
+        }
+
+        private INode MoveToCooks() => _helper.MoveTo(() => _restaurantController.CooksPoint.position);
+
+        private INode CreateOrder()
+        {
+            return new SequenceNode(
+                new ActionNode(TimerView.Show),
+                new TimerNode(CreateOrderTime, t =>
+                {
+                    TimerView.View(CreateOrderTime, t);
+                    _restaurantController.CreateOrder();
+                }, TimerView.Hide)
+            );
+        }
+
+        private INode MoveToTable() => _helper.MoveTo(() => _customerTable.CustomerPoint.position);
+
+        private INode WaitOrder()
+        {
+            return new SequenceNode(
+                new ActionNode(TimerView.Show),
+                new TimerNode(WaitOrderTime, t => { TimerView.View(WaitOrderTime, t); }, TimerView.Hide)
+            );
+        }
+
+        private INode GetOrder() => new ActionNode(() => FoodTray.SetActive(true));
+
+        private INode Eat()
+        {
+            return new SequenceNode(
+                new ActionNode(() =>
+                {
+                    FoodTray.SetActive(false);
+                    TimerView.Show();
+                }),
+                new TimerNode(EatTime, t => { TimerView.View(EatTime, t); }, TimerView.Hide)
+            );
+        }
+
+        private INode GiveMoney()
+        {
+            return new ActionNode(() =>
             {
-                _isRight = !_isRight;
-                SetDestination();
-            }
-        }
-
-        private void SetDestination()
-        {
-            var target = new Vector3(_isRight ? _areaMax.x : _areaMin.x, 0, Random.Range(_areaMin.z, _areaMax.z));
-            NavMeshAgent.SetDestination(target);
+                GiveMoneyIndicator.SetActive(true);
+                //ждать нажатия от пользователя
+                GiveMoneyIndicator.SetActive(false);
+                _customerTable.Clear();
+            });
         }
     }
 }

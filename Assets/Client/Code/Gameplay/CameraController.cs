@@ -16,12 +16,6 @@ namespace Client.Code.Gameplay
 
         public void Update() => WriteInputs();
 
-        private void WriteInputs()
-        {
-            WritePositionInput();
-            _scrollDelta = Input.mouseScrollDelta.y;
-        }
-
         public void LateUpdate()
         {
             Zoom();
@@ -35,6 +29,12 @@ namespace Client.Code.Gameplay
             var areaSize = new Vector3(PositionMax.x - PositionMin.x, 0f, PositionMax.y - PositionMin.y);
             Gizmos.DrawWireCube(areaCenter, areaSize);
             Gizmos.color = Color.white;
+        }
+
+        private void WriteInputs()
+        {
+            WritePositionInput();
+            _scrollDelta = Input.mouseScrollDelta.y;
         }
 
         private void WritePositionInput()
