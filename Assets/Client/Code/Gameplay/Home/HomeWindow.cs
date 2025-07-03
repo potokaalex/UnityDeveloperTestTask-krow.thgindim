@@ -1,4 +1,5 @@
 ﻿using Client.Code.Core.Dispose;
+using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Restaurant;
 using TMPro;

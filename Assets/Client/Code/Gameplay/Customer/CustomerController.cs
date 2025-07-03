@@ -2,6 +2,7 @@
 using Client.Code.Core;
 using Client.Code.Core.BehaviorTree;
 using Client.Code.Core.UI;
+using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Restaurant;
@@ -21,7 +22,7 @@ namespace Client.Code.Gameplay.Customer
         public float EatTime;
         private RestaurantController _restaurantController;
         private KitchenController _kitchenController;
-        private RestaurantCustomerTableController _customerTable;
+        private CustomerTableController _customerTable;
         private CustomerWanderingNode _wanderingNode;
         private PlayerInventory _playerInventory;
         private CustomerHelper _helper;
@@ -66,7 +67,7 @@ namespace Client.Code.Gameplay.Customer
 
         public void Update() => _tree.Tick();
 
-        public void GoRestaurant(RestaurantCustomerTableController customerTable)
+        public void GoRestaurant(CustomerTableController customerTable)
         {
             _customerTable = customerTable;
             _helper.GoingToRestaurant = true;

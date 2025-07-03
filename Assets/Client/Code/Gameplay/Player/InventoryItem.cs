@@ -1,5 +1,8 @@
-﻿namespace Client.Code.Gameplay.Player
+﻿using System;
+
+namespace Client.Code.Gameplay.Player
 {
+    [Serializable]
     public struct InventoryItem
     {
         public InventoryItemType Type;

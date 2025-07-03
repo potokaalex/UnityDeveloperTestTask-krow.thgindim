@@ -1,4 +1,5 @@
-﻿using Client.Code.Gameplay.Restaurant;
+﻿using Client.Code.Gameplay.CustomerZone;
+using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.Pool;
 

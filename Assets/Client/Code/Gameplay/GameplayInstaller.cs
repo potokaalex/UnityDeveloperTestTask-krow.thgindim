@@ -1,5 +1,7 @@
-﻿using Client.Code.Core.ServiceLocator;
+﻿using Client.Code.Core.Progress;
+using Client.Code.Core.ServiceLocator;
 using Client.Code.Gameplay.Customer;
+using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Home;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
@@ -18,12 +20,15 @@ namespace Client.Code.Gameplay
         public HomeWindow HomeWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
+        private ProgressController _progressProvider;
 
         public void Awake()
         {
             //create
             var serviceLocator = new ServiceLocator();
 
+            _progressProvider = new ProgressController();
+            
             serviceLocator.Register<CameraController>(CameraController);
             serviceLocator.Register<RestaurantController>(RestaurantController);
             KitchenController.Construct(CameraController);
@@ -36,14 +41,20 @@ namespace Client.Code.Gameplay
             CustomerSpawner.Construct(customerFactory);
 
             _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, CustomerZoneController);
-
-            var playerInventory = new PlayerInventory();
+            CustomerZoneController.Construct(_progressProvider);
+            
+            var playerInventory = new PlayerInventory(_progressProvider);
             serviceLocator.Register<PlayerInventory>(playerInventory);
             _playerRaycaster = new PlayerRaycaster(CameraController);
 
             HomeWindow.Construct(playerInventory, CustomerZoneController);
 
             //init
+            _progressProvider.Initialize();
+            _progressProvider.RegisterActor(playerInventory);
+            _progressProvider.RegisterActor(CustomerZoneController);
+            
+            playerInventory.Initialize();
             KitchenController.Initialize();
             CustomerZoneController.Initialize();
             CustomerSpawner.Initialize();
@@ -57,5 +68,7 @@ namespace Client.Code.Gameplay
         }
 
         public void OnDestroy() => HomeWindow.Dispose();
+
+        private void OnApplicationFocus(bool hasFocus) => _progressProvider.OnApplicationFocus(hasFocus);
     }
 }
