@@ -1,4 +1,4 @@
-﻿using Client.Code.Core;
+﻿using Client.Code.Core.Rx;
 using Client.Code.Gameplay.Player;
 using UnityEngine;
 

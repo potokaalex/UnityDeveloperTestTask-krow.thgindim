@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Client.Code.Core;
+using Client.Code.Core.Rx;
 
 namespace Client.Code.Gameplay.Player
 {

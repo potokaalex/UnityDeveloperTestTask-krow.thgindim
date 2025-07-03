@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Client.Code.Core.Rx;
+using UnityEngine;
 using UnityEngine.UI;
 
-namespace Client.Code.Core
+namespace Client.Code.Core.UI
 {
     public class ButtonView : MonoBehaviour
     {

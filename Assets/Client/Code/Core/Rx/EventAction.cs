@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Client.Code.Core
+namespace Client.Code.Core.Rx
 {
     public class EventAction
     {

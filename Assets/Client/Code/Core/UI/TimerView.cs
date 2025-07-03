@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Client.Code.Core
+namespace Client.Code.Core.UI
 {
     public class TimerView : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿using Client.Code.Core;
+﻿using Client.Code.Core.UI;
 using TMPro;
 using UnityEngine;
 

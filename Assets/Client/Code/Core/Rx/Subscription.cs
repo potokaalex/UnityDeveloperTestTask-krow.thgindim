@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Client.Code.Core
+namespace Client.Code.Core.Rx
 {
     public readonly struct Subscription : IDisposable
     {
