@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Client.Code.Gameplay.Restaurant;
+﻿using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,26 +7,31 @@ namespace Client.Code.Gameplay.Customer
     public class CustomersToRestaurantSender
     {
         private readonly CustomersContainer _container;
-        private readonly RestaurantController _restaurantController;
+        private readonly CustomerZoneController _customerZoneController;
 
-        public CustomersToRestaurantSender(CustomersContainer container, RestaurantController restaurantController)
+        public CustomersToRestaurantSender(CustomersContainer container, CustomerZoneController customerZoneController)
         {
             _container = container;
-            _restaurantController = restaurantController;
+            _customerZoneController = customerZoneController;
         }
 
         public void Tick()
         {
-            using var d = ListPool<CustomerController>.Get(out var controllers);
-            _container.GetAll(controllers);
-            if (controllers.Count < 0)
-                return;
+            using var d = ListPool<CustomerController>.Get(out var allControllers);
+            _container.GetAll(allControllers);
 
-            while (_restaurantController.HasEmptyTable() && controllers.Any(x => x.CanGoRestaurant))
+            using var d2 = ListPool<CustomerController>.Get(out var validControllers);
+            foreach (var controller in allControllers)
             {
-                var index = Random.Range(0, controllers.Count);
-                controllers[index].GoRestaurant(_restaurantController.ReserveEmptyTable());
-                controllers.RemoveAt(index);
+                if (controller.CanGoRestaurant)
+                    validControllers.Add(controller);
+            }
+
+            while (validControllers.Count > 0 && _customerZoneController.HasEmptyTable())
+            {
+                var index = Random.Range(0, validControllers.Count);
+                validControllers[index].GoRestaurant(_customerZoneController.ReserveEmptyTable());
+                validControllers.RemoveAt(index);
             }
         }
     }

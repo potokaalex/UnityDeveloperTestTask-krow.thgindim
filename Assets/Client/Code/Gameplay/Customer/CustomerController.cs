@@ -129,6 +129,7 @@ namespace Client.Code.Gameplay.Customer
                 {
                     GiveMoneyIndicator.SetActive(true);
                     subscription = _customerTable.OnInteract.Subscribe(() => canGiveMoney = true);
+                    canGiveMoney = false;
                 }),
                 new WaitUntilNode(() =>
                 {

@@ -12,6 +12,7 @@ namespace Client.Code.Gameplay
     {
         public CustomerSpawner CustomerSpawner;
         public RestaurantController RestaurantController;
+        public CustomerZoneController CustomerZoneController;
         public CameraController CameraController;
         public KitchenController KitchenController;
         public HomeWindow HomeWindow;
@@ -34,16 +35,17 @@ namespace Client.Code.Gameplay
             var customerFactory = new CustomerFactory(serviceLocator);
             CustomerSpawner.Construct(customerFactory);
 
-            _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, RestaurantController);
+            _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, CustomerZoneController);
 
             var playerInventory = new PlayerInventory();
             serviceLocator.Register<PlayerInventory>(playerInventory);
             _playerRaycaster = new PlayerRaycaster(CameraController);
 
-            HomeWindow.Construct(playerInventory);
+            HomeWindow.Construct(playerInventory, CustomerZoneController);
 
             //init
             KitchenController.Initialize();
+            CustomerZoneController.Initialize();
             CustomerSpawner.Initialize();
             HomeWindow.Initialize();
         }
