@@ -76,7 +76,6 @@ MonoBehaviour:
   TimerView: {fileID: 5756807653206008140}
   ToCameraRotator: {fileID: 3697352631744006704}
   CreateOrderTime: 5
-  WaitOrderTime: 5
   EatTime: 5
 --- !u!1 &1171761339202723853
 GameObject:
@@ -457,7 +456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 1.4}
+  m_AnchoredPosition: {x: 0, y: 0.35}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6153261017006595139

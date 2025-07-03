@@ -141,6 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021213064842702764}
   - component: {fileID: 2081776097095535621}
+  - component: {fileID: 8051090979775512218}
   m_Layer: 0
   m_Name: CustomerTable
   m_TagString: Untagged
@@ -178,3 +179,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CustomerPoint: {fileID: 3505002112018529349}
+--- !u!65 &8051090979775512218
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9116932686460548673}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.0780964, y: 1.2215573, z: 2.572631}
+  m_Center: {x: -0.000121593475, y: 0.6117398, z: -0.66783}

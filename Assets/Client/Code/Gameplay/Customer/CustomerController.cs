@@ -1,6 +1,8 @@
-﻿using Client.Code.Core;
+﻿using System;
+using Client.Code.Core;
 using Client.Code.Core.BehaviorTree;
 using Client.Code.Gameplay.Kitchen;
+using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +22,7 @@ namespace Client.Code.Gameplay.Customer
         private KitchenController _kitchenController;
         private RestaurantCustomerTableController _customerTable;
         private CustomerWanderingNode _wanderingNode;
+        private PlayerInventory _playerInventory;
         private CustomerHelper _helper;
         private FoodCreationOrder _currentOrder;
         private INode _tree;
@@ -27,8 +30,9 @@ namespace Client.Code.Gameplay.Customer
         public bool CanGoRestaurant => !_helper.GoingToRestaurant;
 
         public void Construct(RestaurantController restaurantController, CameraController cameraController, KitchenController kitchenController,
-            Vector3 areaMin, Vector3 areaMax)
+            PlayerInventory playerInventory, Vector3 areaMin, Vector3 areaMax)
         {
+            _playerInventory = playerInventory;
             _kitchenController = kitchenController;
             _restaurantController = restaurantController;
             ToCameraRotator.Construct(cameraController);
@@ -117,13 +121,29 @@ namespace Client.Code.Gameplay.Customer
 
         private INode GiveMoney()
         {
-            return new ActionNode(() =>
-            {
-                GiveMoneyIndicator.SetActive(true);
-                //ждать нажатия от пользователя
-                GiveMoneyIndicator.SetActive(false);
-                _customerTable.Clear();
-            });
+            IDisposable subscription = null;
+            var canGiveMoney = false;
+
+            return new SequenceNode(
+                new ActionNode(() =>
+                {
+                    GiveMoneyIndicator.SetActive(true);
+                    subscription = _customerTable.OnInteract.Subscribe(() => canGiveMoney = true);
+                }),
+                new WaitUntilNode(() =>
+                {
+                    if (canGiveMoney)
+                    {
+                        subscription.Dispose();
+                        GiveMoneyIndicator.SetActive(false);
+                        _customerTable.Clear();
+                        _playerInventory.Add(new InventoryItem(InventoryItemType.Gold, 1));
+                        return true;
+                    }
+
+                    return false;
+                })
+            );
         }
     }
 }
