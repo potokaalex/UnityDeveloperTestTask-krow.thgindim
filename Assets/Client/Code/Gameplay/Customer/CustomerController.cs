@@ -156,7 +156,6 @@ namespace Client.Code.Gameplay.Customer
                         subscription.Dispose();
                         GiveMoneyIndicator.SetActive(false);
                         _customerTable.Clear();
-                        //?
                         _playerInventory.Add(MoneyPayed.Item, MoneyPayed.Count);
                         _playerScore.Add(1);
                         return true;

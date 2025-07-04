@@ -13,6 +13,7 @@ using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
 using Client.Code.Gameplay.Restaurant;
+using Client.Code.Gameplay.Shop;
 
 namespace Client.Code.Gameplay
 {
@@ -25,6 +26,7 @@ namespace Client.Code.Gameplay
         public KitchenController KitchenController;
         public HomeWindow HomeWindow;
         public SettingsWindow SettingsWindow;
+        public ShopWindow ShopWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
         private readonly CompositeDisposable _disposables = new();
@@ -45,8 +47,9 @@ namespace Client.Code.Gameplay
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
-            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow, itemsFactory);
-
+            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow, itemsFactory, ShopWindow);
+            ShopWindow.Construct(progressController, Locator.Get<IConfigsProvider>(), playerInventory);
+            
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);
             Locator.Register<PlayerScore>(playerScore).AddTo(_disposables);
@@ -59,7 +62,8 @@ namespace Client.Code.Gameplay
             progressController.RegisterActor(playerInventory).AddTo(_disposables);
             progressController.RegisterActor(playerScore).AddTo(_disposables);
             progressController.RegisterActor(CustomerZoneController).AddTo(_disposables);
-            
+            progressController.RegisterActor(ShopWindow).AddTo(_disposables);
+
             playerInventory.Initialize();
             playerScore.Initialize();
             KitchenController.Initialize();
@@ -67,12 +71,14 @@ namespace Client.Code.Gameplay
             CustomerSpawner.Initialize();
             SettingsWindow.Initialize();
             HomeWindow.Initialize();
+            ShopWindow.Initialize();
         }
 
         protected override void UnInstall()
         {
             SettingsWindow.Dispose();
             HomeWindow.Dispose();
+            ShopWindow.Dispose();
             _disposables.Dispose();
         }
 

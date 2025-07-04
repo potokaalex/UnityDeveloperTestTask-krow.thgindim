@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Recipe
   m_EditorClassIdentifier: 
   Id: recipe
-  Icon: {fileID: -5821098215714624906, guid: aa0422cf1c09b344a9a411fc1cba743e, type: 3}
+  Icon: {fileID: 2353571312451627304, guid: 29243acfb820a2c4bbc18d922ca0c39f, type: 3}
   Name: Recipe
   Description: 'used for upgrades and crafts.
 

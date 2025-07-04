@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   Id: iron
-  Icon: {fileID: -5821098215714624906, guid: aa0422cf1c09b344a9a411fc1cba743e, type: 3}
+  Icon: {fileID: -7966776921622821435, guid: 1dbf5dede7c691641bc771e42b2de99b, type: 3}
   Name: Iron
   Description: 'used for upgrades and crafts.
 

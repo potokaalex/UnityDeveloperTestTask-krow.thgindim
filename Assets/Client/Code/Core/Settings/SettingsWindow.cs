@@ -1,7 +1,6 @@
 ﻿using Client.Code.Core.Audio;
 using Client.Code.Core.Dispose;
 using Client.Code.Core.UI;
-using Client.Code.Services.UI.Window;
 using UnityEngine.UI;
 
 namespace Client.Code.Core.Settings

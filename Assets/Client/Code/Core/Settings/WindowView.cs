@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Client.Code.Services.UI.Window
+namespace Client.Code.Core.Settings
 {
     public abstract class WindowView : MonoBehaviour
     {

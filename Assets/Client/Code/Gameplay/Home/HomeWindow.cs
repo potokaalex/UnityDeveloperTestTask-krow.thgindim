@@ -5,6 +5,7 @@ using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Shop;
 using TMPro;
 using UnityEngine;
 
@@ -14,9 +15,11 @@ namespace Client.Code.Gameplay.Home
     {
         public TextMeshProUGUI Score;
         public TextMeshProUGUI Cash;
+        public TextMeshProUGUI Gem;
         public BuyPanel BuyCustomerTable;
         public ButtonView LoadMainMenuButton;
         public ButtonView OpenSettingsButton;
+        public ButtonView OpenShopButton;
         private readonly CompositeDisposable _disposable = new();
         private CustomerZoneController _customerZoneController;
         private PlayerScore _playerScore;
@@ -24,9 +27,10 @@ namespace Client.Code.Gameplay.Home
         private SettingsWindow _settingsWindow;
         private PlayerInventory _playerInventory;
         private ItemsProvider _itemsProvider;
+        private ShopWindow _shopWindow;
 
         public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController, PlayerScore playerScore,
-            GameplayManager gameplayManager, SettingsWindow settingsWindow, ItemsProvider itemsProvider)
+            GameplayManager gameplayManager, SettingsWindow settingsWindow, ItemsProvider itemsProvider, ShopWindow shopWindow)
         {
             _itemsProvider = itemsProvider;
             _playerInventory = playerInventory;
@@ -34,6 +38,7 @@ namespace Client.Code.Gameplay.Home
             _playerScore = playerScore;
             _customerZoneController = customerZoneController;
             _settingsWindow = settingsWindow;
+            _shopWindow = shopWindow;
         }
 
         public void Initialize()
@@ -45,6 +50,7 @@ namespace Client.Code.Gameplay.Home
             LoadMainMenuButton.OnClick.Subscribe(_gameplayManager.LoadMainMenu).AddTo(_disposable);
             UpdateView();
             OpenSettingsButton.OnClick.Subscribe(_settingsWindow.Open).AddTo(_disposable);
+            OpenShopButton.OnClick.Subscribe(_shopWindow.Open).AddTo(_disposable);
         }
 
         public void Dispose() => _disposable.Dispose();
@@ -54,6 +60,8 @@ namespace Client.Code.Gameplay.Home
             Score.SetText($"Score: {_playerScore.Score}");
 
             Cash.SetText($"Cash: {_playerInventory.GetCount(_itemsProvider.Get("cash"))}");
+
+            Gem.SetText($"Gem: {_playerInventory.GetCount(_itemsProvider.Get("gem"))}");
 
             BuyCustomerTable.Description.SetText(
                 $"CustomerTables: {_customerZoneController.TablesAliveCount}/{_customerZoneController.TablesMaxCount}");

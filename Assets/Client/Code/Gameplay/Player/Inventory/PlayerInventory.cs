@@ -33,9 +33,12 @@ namespace Client.Code.Gameplay.Player.Inventory
         {
             if (count <= 0)
                 return false;
-            
+
             if (TryGetItem(item, out var itemIndex))
-                Set(itemIndex, new InventoryItem(item, count, _items[itemIndex].CellIndex));
+            {
+                Set(itemIndex, new InventoryItem(item, _items[itemIndex].Count + count, _items[itemIndex].CellIndex));
+                return true;
+            }
 
             if (TryGetEmptyCell(out var cellIndex))
             {
@@ -51,7 +54,7 @@ namespace Client.Code.Gameplay.Player.Inventory
         {
             if (count <= 0)
                 return true;
-            
+
             if (TryGetItem(item, out var itemIndex))
             {
                 var i = _items[itemIndex];
