@@ -15,10 +15,13 @@ MonoBehaviour:
   Id: gem
   ToInventory:
     Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
+    Count: 0
+  ToWallet:
+    Type: 2
     Count: 1
   Price:
     Type: 1
     Count: 2
+  Name: Gem
   Description: used for upgrades and crafts.
   IsCurrency: 1
-  IsInfinite: 1

@@ -16,11 +16,14 @@ MonoBehaviour:
   ToInventory:
     Item: {fileID: 11400000, guid: 5400ac865a072994d8794d04ad9800cd, type: 2}
     Count: 1
+  ToWallet:
+    Type: 0
+    Count: 0
   Price:
     Type: 2
     Count: 1
+  Name: Recipe
   Description: 'used for upgrades and crafts.
 
     disappears after purchase'
   IsCurrency: 0
-  IsInfinite: 0

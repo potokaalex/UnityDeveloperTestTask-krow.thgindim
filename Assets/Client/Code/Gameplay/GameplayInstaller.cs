@@ -51,7 +51,8 @@ namespace Client.Code.Gameplay
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
             HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet);
-            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
+            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet,
+                currencyProvider);
             ShopWindow.Construct(shopController, currencyProvider);
 
             //bind

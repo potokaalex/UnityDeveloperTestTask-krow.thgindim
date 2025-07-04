@@ -16,11 +16,14 @@ MonoBehaviour:
   ToInventory:
     Item: {fileID: 11400000, guid: 7af6aec3dd19e01489a9b4a76e85d8b0, type: 2}
     Count: 1
+  ToWallet:
+    Type: 0
+    Count: 0
   Price:
     Type: 2
     Count: 1
+  Name: Iron
   Description: 'used for upgrades and crafts.
 
     disappears after purchase'
   IsCurrency: 0
-  IsInfinite: 0

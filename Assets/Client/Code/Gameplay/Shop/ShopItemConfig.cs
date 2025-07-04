@@ -8,10 +8,11 @@ namespace Client.Code.Gameplay.Shop
     public class ShopItemConfig : ScriptableObject
     {
         public string Id;
-        public ItemAmount ToInventory;
+        public ItemAmount ToInventory; //valid only if not IsCurrency!
+        public CurrencyAmount ToWallet; //valid only if IsCurrency!
         public CurrencyAmount Price;
+        public string Name;
         [TextArea] public string Description;
         public bool IsCurrency;
-        public bool IsInfinite;
     }
 }

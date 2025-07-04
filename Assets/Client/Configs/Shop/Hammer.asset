@@ -16,11 +16,14 @@ MonoBehaviour:
   ToInventory:
     Item: {fileID: 11400000, guid: 8da2c80300641f04588bba38d396a874, type: 2}
     Count: 1
+  ToWallet:
+    Type: 0
+    Count: 0
   Price:
     Type: 2
     Count: 1
+  Name: Hammer
   Description: 'used for upgrades and crafts.
 
     disappears after purchase'
   IsCurrency: 0
-  IsInfinite: 0
