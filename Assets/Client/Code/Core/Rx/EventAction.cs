@@ -5,20 +5,21 @@ namespace Client.Code.Core.Rx
 {
     public class EventAction
     {
-        private readonly List<Action> _actions = new();
+        private readonly List<Flow> _flows = new();
 
-        public Subscription Subscribe(Action action)
+        public Flow Subscribe(Action action)
         {
-            _actions.Add(action);
-            return new Subscription(action, this);
+            var flow = new Flow(action, this);
+            _flows.Add(flow);
+            return flow;
         }
 
-        public void UnSubscribe(Action action) => _actions.Remove(action);
+        public void UnSubscribe(Flow flow) => _flows.Remove(flow);
 
         public void Invoke()
         {
-            for (var i = 0; i < _actions.Count; i++)
-                _actions[i].Invoke();
+            for (var i = 0; i < _flows.Count; i++)
+                _flows[i].Invoke();
         }
     }
 }

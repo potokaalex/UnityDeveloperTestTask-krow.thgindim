@@ -1,7 +1,9 @@
-﻿using Client.Code.Core.Dispose;
+﻿using Client.Code.Core.Audio;
+using Client.Code.Core.Dispose;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Scene;
 using Client.Code.Core.ServiceLocatorCode;
+using Client.Code.Core.Settings;
 using Client.Code.Gameplay.Customer;
 using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Home;
@@ -19,6 +21,7 @@ namespace Client.Code.Gameplay
         public CameraController CameraController;
         public KitchenController KitchenController;
         public HomeWindow HomeWindow;
+        public SettingsWindow SettingsWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
         private readonly CompositeDisposable _disposables = new();
@@ -37,7 +40,8 @@ namespace Client.Code.Gameplay
             CustomerZoneController.Construct(progressController, playerScore);
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
-            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager);
+            SettingsWindow.Construct(Locator.Get<AudioController>());
+            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow);
 
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);
@@ -57,11 +61,13 @@ namespace Client.Code.Gameplay
             KitchenController.Initialize();
             CustomerZoneController.Initialize();
             CustomerSpawner.Initialize();
+            SettingsWindow.Initialize();
             HomeWindow.Initialize();
         }
 
         protected override void UnInstall()
         {
+            SettingsWindow.Dispose();
             HomeWindow.Dispose();
             _disposables.Dispose();
         }
