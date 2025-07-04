@@ -1,4 +1,5 @@
 ﻿using Client.Code.Core.Audio;
+using Client.Code.Core.Config;
 using Client.Code.Core.Dispose;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Scene;
@@ -7,8 +8,10 @@ using Client.Code.Core.Settings;
 using Client.Code.Gameplay.Customer;
 using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Home;
+using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
+using Client.Code.Gameplay.Player.Inventory;
 using Client.Code.Gameplay.Restaurant;
 
 namespace Client.Code.Gameplay
@@ -30,18 +33,19 @@ namespace Client.Code.Gameplay
         {
             //create
             var progressController = Locator.Get<ProgressController>();
-            var playerInventory = new PlayerInventory(progressController);
+            var itemsFactory = new ItemsProvider(Locator.Get<IConfigsProvider>());
+            var playerInventory = new PlayerInventory(progressController, itemsFactory);
             var playerScore = new PlayerScore(progressController);
             KitchenController.Construct(CameraController);
             var customerContainer = new CustomersContainer();
             var customerFactory = new CustomerFactory(Locator);
             CustomerSpawner.Construct(customerFactory);
             _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, CustomerZoneController);
-            CustomerZoneController.Construct(progressController, playerScore);
+            CustomerZoneController.Construct(progressController, playerScore, playerInventory);
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
-            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow);
+            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow, itemsFactory);
 
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);

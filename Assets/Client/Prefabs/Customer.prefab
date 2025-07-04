@@ -77,6 +77,9 @@ MonoBehaviour:
   ToCameraRotator: {fileID: 3697352631744006704}
   CreateOrderTime: 5
   EatTime: 5
+  MoneyPayed:
+    Item: {fileID: 11400000, guid: 4ef03eb3fbe4c6841b01e252ec65c71b, type: 2}
+    Count: 1
 --- !u!1 &1171761339202723853
 GameObject:
   m_ObjectHideFlags: 0

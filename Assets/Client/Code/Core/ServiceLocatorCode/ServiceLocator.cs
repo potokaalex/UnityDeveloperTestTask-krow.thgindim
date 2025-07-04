@@ -20,16 +20,6 @@ namespace Client.Code.Core.ServiceLocatorCode
 
         public TContract Get<TContract>() => (TContract)_services[typeof(TContract)];
 
-        public void GetAll<T>(List<T> outList)
-        {
-            outList.Clear();
-            foreach (var service in _services)
-            {
-                if(service is T typedService)
-                    outList.Add(typedService);
-            }
-        }
-
         public void Clear() => _services.Clear();
     }
 }

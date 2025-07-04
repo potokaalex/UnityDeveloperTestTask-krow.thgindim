@@ -2,7 +2,9 @@
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.CustomerZone;
+using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Player;
+using Client.Code.Gameplay.Player.Inventory;
 using TMPro;
 using UnityEngine;
 
@@ -11,24 +13,26 @@ namespace Client.Code.Gameplay.Home
     public class HomeWindow : MonoBehaviour
     {
         public TextMeshProUGUI Score;
-        public TextMeshProUGUI Gold;
+        public TextMeshProUGUI Cash;
         public BuyPanel BuyCustomerTable;
         public ButtonView LoadMainMenuButton;
         public ButtonView OpenSettingsButton;
         private readonly CompositeDisposable _disposable = new();
-        private PlayerInventory _playerInventory;
         private CustomerZoneController _customerZoneController;
         private PlayerScore _playerScore;
         private GameplayManager _gameplayManager;
         private SettingsWindow _settingsWindow;
+        private PlayerInventory _playerInventory;
+        private ItemsProvider _itemsProvider;
 
         public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController, PlayerScore playerScore,
-            GameplayManager gameplayManager, SettingsWindow settingsWindow)
+            GameplayManager gameplayManager, SettingsWindow settingsWindow, ItemsProvider itemsProvider)
         {
+            _itemsProvider = itemsProvider;
+            _playerInventory = playerInventory;
             _gameplayManager = gameplayManager;
             _playerScore = playerScore;
             _customerZoneController = customerZoneController;
-            _playerInventory = playerInventory;
             _settingsWindow = settingsWindow;
         }
 
@@ -49,8 +53,7 @@ namespace Client.Code.Gameplay.Home
         {
             Score.SetText($"Score: {_playerScore.Score}");
 
-            var gold = _playerInventory.Get(InventoryItemType.Gold);
-            Gold.SetText($"Gold: {gold.Count}");
+            Cash.SetText($"Cash: {_playerInventory.GetCount(_itemsProvider.Get("cash"))}");
 
             BuyCustomerTable.Description.SetText(
                 $"CustomerTables: {_customerZoneController.TablesAliveCount}/{_customerZoneController.TablesMaxCount}");

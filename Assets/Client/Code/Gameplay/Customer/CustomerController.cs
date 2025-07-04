@@ -3,8 +3,10 @@ using Client.Code.Core;
 using Client.Code.Core.BehaviorTree;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.CustomerZone;
+using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
+using Client.Code.Gameplay.Player.Inventory;
 using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +22,7 @@ namespace Client.Code.Gameplay.Customer
         public ToCameraRotator ToCameraRotator;
         public float CreateOrderTime;
         public float EatTime;
+        public ItemCount MoneyPayed;
         private RestaurantController _restaurantController;
         private KitchenController _kitchenController;
         private CustomerTableController _customerTable;
@@ -153,7 +156,8 @@ namespace Client.Code.Gameplay.Customer
                         subscription.Dispose();
                         GiveMoneyIndicator.SetActive(false);
                         _customerTable.Clear();
-                        _playerInventory.Add(new InventoryItem(InventoryItemType.Gold, 1));
+                        //?
+                        _playerInventory.Add(MoneyPayed.Item, MoneyPayed.Count);
                         _playerScore.Add(1);
                         return true;
                     }

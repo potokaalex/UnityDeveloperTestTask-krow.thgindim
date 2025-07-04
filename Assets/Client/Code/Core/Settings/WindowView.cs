@@ -11,6 +11,7 @@ namespace Client.Code.Services.UI.Window
         {
             CanvasGroup.alpha = IsOpen ? 1 : 0;
             CanvasGroup.blocksRaycasts = IsOpen;
+            gameObject.SetActive(true);
         }
 
         public virtual void Open()

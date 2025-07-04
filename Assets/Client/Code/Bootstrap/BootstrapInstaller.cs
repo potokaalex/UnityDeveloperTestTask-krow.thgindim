@@ -25,6 +25,7 @@ namespace Client.Code.Bootstrap
             AudioController.Construct(_progressController);
 
             //bind
+            Locator.Register<IConfigsProvider>(configsController);
             Locator.Register<ProgressController>(_progressController);
             Locator.Register<SceneLoader>(sceneLoader);
             Locator.Register<AudioController>(AudioController);

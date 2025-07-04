@@ -17,3 +17,9 @@ MonoBehaviour:
     Value: MainMenu
   - Key: 1
     Value: Gameplay
+  Items:
+  - {fileID: 11400000, guid: 4ef03eb3fbe4c6841b01e252ec65c71b, type: 2}
+  - {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
+  - {fileID: 11400000, guid: 8da2c80300641f04588bba38d396a874, type: 2}
+  - {fileID: 11400000, guid: 7af6aec3dd19e01489a9b4a76e85d8b0, type: 2}
+  - {fileID: 11400000, guid: 5400ac865a072994d8794d04ad9800cd, type: 2}
