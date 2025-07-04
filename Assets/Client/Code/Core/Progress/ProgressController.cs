@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Client.Code.Core.Dispose;
 using Client.Code.Core.Progress.Actors;
 using UnityEngine;
 
@@ -29,10 +30,11 @@ namespace Client.Code.Core.Progress
                 Save();
         }
 
-        public void RegisterActor(IProgressActor actor)
+        public IDisposable RegisterActor(IProgressActor actor)
         {
             if (actor is IProgressWriter writer)
                 _writers.Add(writer);
+            return new DisposableAction<IProgressActor>(UnRegisterActor, actor);
         }
 
         public void UnRegisterActor(IProgressActor actor)
@@ -53,13 +55,13 @@ namespace Client.Code.Core.Progress
             }
         }
 
-        private void Load() => _progressData ??= LoadProgress();
-
-        private void Save()
+        public void Save()
         {
             ActorsWriteProgress();
             SaveProgress(_progressData);
         }
+
+        private void Load() => _progressData ??= LoadProgress();
 
         private void ActorsWriteProgress()
         {

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: ConfigData
   m_EditorClassIdentifier: 
   Scenes:
+  - Key: 2
+    Value: MainMenu
   - Key: 1
     Value: Gameplay

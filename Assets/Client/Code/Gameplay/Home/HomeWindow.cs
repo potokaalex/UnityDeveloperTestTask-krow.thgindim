@@ -1,4 +1,6 @@
 ﻿using Client.Code.Core.Dispose;
+using Client.Code.Core.Scene;
+using Client.Code.Core.UI;
 using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Restaurant;
@@ -12,13 +14,17 @@ namespace Client.Code.Gameplay.Home
         public TextMeshProUGUI Score;
         public TextMeshProUGUI Gold;
         public BuyPanel BuyCustomerTable;
+        public ButtonView LoadMainMenuButton;
         private readonly CompositeDisposable _disposable = new();
         private PlayerInventory _playerInventory;
         private CustomerZoneController _customerZoneController;
         private PlayerScore _playerScore;
+        private GameplayManager _gameplayManager;
 
-        public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController, PlayerScore playerScore)
+
+        public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController, PlayerScore playerScore, GameplayManager gameplayManager)
         {
+            _gameplayManager = gameplayManager;
             _playerScore = playerScore;
             _customerZoneController = customerZoneController;
             _playerInventory = playerInventory;
@@ -30,6 +36,7 @@ namespace Client.Code.Gameplay.Home
             _customerZoneController.OnTableBuild.Subscribe(UpdateView).AddTo(_disposable);
             _playerScore.OnScoreChanged.Subscribe(UpdateView).AddTo(_disposable);
             BuyCustomerTable.BuyButton.OnClick.Subscribe(() => _customerZoneController.BuildTable()).AddTo(_disposable);
+            LoadMainMenuButton.OnClick.Subscribe(_gameplayManager.LoadMainMenu).AddTo(_disposable);
             UpdateView();
         }
 
