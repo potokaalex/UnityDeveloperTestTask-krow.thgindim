@@ -4,6 +4,7 @@ using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 
 namespace Client.Code.Gameplay.Shop
 {
@@ -13,14 +14,16 @@ namespace Client.Code.Gameplay.Shop
         private readonly PlayerInventory _playerInventory;
         private readonly IProgressProvider _progressProvider;
         private readonly PlayerScore _playerScore;
+        private readonly PlayerWallet _playerWallet;
 
         public ShopController(IConfigsProvider configsProvider, PlayerInventory playerInventory, IProgressProvider progressProvider,
-            PlayerScore playerScore)
+            PlayerScore playerScore, PlayerWallet playerWallet)
         {
             _configsProvider = configsProvider;
             _playerInventory = playerInventory;
             _progressProvider = progressProvider;
             _playerScore = playerScore;
+            _playerWallet = playerWallet;
         }
 
         public List<ShopItemController> ItemControllers { get; } = new();
@@ -29,7 +32,7 @@ namespace Client.Code.Gameplay.Shop
         {
             foreach (var item in _configsProvider.Data.ShopItems)
             {
-                var controller = new ShopItemController(item, _playerInventory, _progressProvider, _playerScore);
+                var controller = new ShopItemController(item, _playerInventory,_playerWallet, _progressProvider, _playerScore);
                 controller.Initialize();
                 ItemControllers.Add(controller);
             }

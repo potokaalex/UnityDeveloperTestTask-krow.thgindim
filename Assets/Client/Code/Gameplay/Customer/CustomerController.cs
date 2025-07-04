@@ -3,10 +3,9 @@ using Client.Code.Core;
 using Client.Code.Core.BehaviorTree;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.CustomerZone;
-using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
-using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,23 +21,23 @@ namespace Client.Code.Gameplay.Customer
         public ToCameraRotator ToCameraRotator;
         public float CreateOrderTime;
         public float EatTime;
-        public ItemCount MoneyPayed;
+        public CurrencyAmount MoneyPayed;
         private RestaurantController _restaurantController;
         private KitchenController _kitchenController;
         private CustomerTableController _customerTable;
         private CustomerWanderingNode _wanderingNode;
-        private PlayerInventory _playerInventory;
         private CustomerHelper _helper;
         private FoodCreationOrder _currentOrder;
         private PlayerScore _playerScore;
+        private PlayerWallet _playerWallet;
         private INode _tree;
 
         public bool CanGoRestaurant => !_helper.GoingToRestaurant;
 
         public void Construct(RestaurantController restaurantController, CameraController cameraController, KitchenController kitchenController,
-            PlayerInventory playerInventory, PlayerScore playerScore, Vector3 areaMin, Vector3 areaMax)
+            PlayerScore playerScore, PlayerWallet playerWallet, Vector3 areaMin, Vector3 areaMax)
         {
-            _playerInventory = playerInventory;
+            _playerWallet = playerWallet;
             _kitchenController = kitchenController;
             _restaurantController = restaurantController;
             _playerScore = playerScore;
@@ -156,7 +155,7 @@ namespace Client.Code.Gameplay.Customer
                         subscription.Dispose();
                         GiveMoneyIndicator.SetActive(false);
                         _customerTable.Clear();
-                        _playerInventory.Add(MoneyPayed.Item, MoneyPayed.Count);
+                        _playerWallet.Add(MoneyPayed);
                         _playerScore.Add(1);
                         return true;
                     }

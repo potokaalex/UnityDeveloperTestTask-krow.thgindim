@@ -5,6 +5,7 @@ using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Shop;
 using TMPro;
 using UnityEngine;
@@ -25,15 +26,13 @@ namespace Client.Code.Gameplay.Home
         private PlayerScore _playerScore;
         private GameplayManager _gameplayManager;
         private SettingsWindow _settingsWindow;
-        private PlayerInventory _playerInventory;
-        private ItemsProvider _itemsProvider;
         private ShopWindow _shopWindow;
+        private PlayerWallet _playerWallet;
 
-        public void Construct(PlayerInventory playerInventory, CustomerZoneController customerZoneController, PlayerScore playerScore,
-            GameplayManager gameplayManager, SettingsWindow settingsWindow, ItemsProvider itemsProvider, ShopWindow shopWindow)
+        public void Construct(CustomerZoneController customerZoneController, PlayerScore playerScore, GameplayManager gameplayManager,
+            SettingsWindow settingsWindow, ShopWindow shopWindow, PlayerWallet playerWallet)
         {
-            _itemsProvider = itemsProvider;
-            _playerInventory = playerInventory;
+            _playerWallet = playerWallet;
             _gameplayManager = gameplayManager;
             _playerScore = playerScore;
             _customerZoneController = customerZoneController;
@@ -43,7 +42,7 @@ namespace Client.Code.Gameplay.Home
 
         public void Initialize()
         {
-            _playerInventory.OnChanged.Subscribe(UpdateView).AddTo(_disposable);
+            _playerWallet.OnChanged.Subscribe(UpdateView).AddTo(_disposable);
             _customerZoneController.OnTableBuild.Subscribe(UpdateView).AddTo(_disposable);
             _playerScore.OnScoreChanged.Subscribe(UpdateView).AddTo(_disposable);
             BuyCustomerTable.BuyButton.OnClick.Subscribe(() => _customerZoneController.BuildTable()).AddTo(_disposable);
@@ -59,9 +58,8 @@ namespace Client.Code.Gameplay.Home
         {
             Score.SetText($"Score: {_playerScore.Score}");
 
-            Cash.SetText($"Cash: {_playerInventory.GetCount(_itemsProvider.Get("cash"))}");
-
-            Gem.SetText($"Gem: {_playerInventory.GetCount(_itemsProvider.Get("gem"))}");
+            Cash.SetText($"Cash: {_playerWallet.Get(CurrencyType.Cash).Count}");
+            Gem.SetText($"Gem: {_playerWallet.Get(CurrencyType.Gem).Count}");
 
             BuyCustomerTable.Description.SetText(
                 $"CustomerTables: {_customerZoneController.TablesAliveCount}/{_customerZoneController.TablesMaxCount}");

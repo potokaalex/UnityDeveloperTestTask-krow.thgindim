@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Client.Code.Core.Scene;
 using Client.Code.Gameplay.Item;
+using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Shop;
 using UnityEngine;
 
@@ -12,5 +13,6 @@ namespace Client.Code.Core.Config
         public List<SerializedKeyValue<SceneName, string>> Scenes;
         public List<ItemConfig> Items;
         public List<ShopItemConfig> ShopItems;
+        public List<CurrencyConfig> CurrencyItems;
     }
 }

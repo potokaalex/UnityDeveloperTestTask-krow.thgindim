@@ -2,6 +2,7 @@
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Client.Code.Gameplay.Customer
             var controller = Object.Instantiate(prefab, root, true);
             controller.transform.position = position;
             controller.Construct(_serviceLocator.Get<RestaurantController>(), _serviceLocator.Get<CameraController>(),
-                _serviceLocator.Get<KitchenController>(), _serviceLocator.Get<PlayerInventory>(), _serviceLocator.Get<PlayerScore>(),
+                _serviceLocator.Get<KitchenController>(), _serviceLocator.Get<PlayerScore>(), _serviceLocator.Get<PlayerWallet>(),
                 areaMin, areaMax);
             controller.Initialize();
             _serviceLocator.Get<CustomersContainer>().Add(controller);

@@ -29,38 +29,38 @@ namespace Client.Code.Gameplay.Player.Inventory
                 _items.Add(new InventoryItem(_itemsProvider.Get(progress.ItemId), progress.Count, progress.CellIndex));
         }
 
-        public bool Add(ItemConfig item, int count)
+        public bool Add(ItemAmount amount)
         {
-            if (count <= 0)
+            if (amount.Count <= 0)
                 return false;
 
-            if (TryGetItem(item, out var itemIndex))
+            if (TryGetItem(amount.Item, out var itemIndex))
             {
-                Set(itemIndex, new InventoryItem(item, _items[itemIndex].Count + count, _items[itemIndex].CellIndex));
+                Set(itemIndex, new InventoryItem(amount.Item, _items[itemIndex].Count + amount.Count, _items[itemIndex].CellIndex));
                 return true;
             }
 
             if (TryGetEmptyCell(out var cellIndex))
             {
                 _items.Add(default);
-                Set(_items.Count - 1, new InventoryItem(item, count, cellIndex));
+                Set(_items.Count - 1, new InventoryItem(amount.Item, amount.Count, cellIndex));
                 return true;
             }
 
             return false;
         }
 
-        public bool Remove(ItemConfig item, int count)
+        public bool Remove(ItemAmount amount)
         {
-            if (count <= 0)
+            if (amount.Count <= 0)
                 return true;
 
-            if (TryGetItem(item, out var itemIndex))
+            if (TryGetItem(amount.Item, out var itemIndex))
             {
                 var i = _items[itemIndex];
-                if (i.Count >= count)
+                if (i.Count >= amount.Count)
                 {
-                    Set(itemIndex, new InventoryItem(item, i.Count - count, i.CellIndex));
+                    Set(itemIndex, new InventoryItem(amount.Item, i.Count - amount.Count, i.CellIndex));
                     return true;
                 }
 

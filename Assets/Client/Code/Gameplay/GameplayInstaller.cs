@@ -12,6 +12,7 @@ using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
 using Client.Code.Gameplay.Shop;
 
@@ -37,22 +38,25 @@ namespace Client.Code.Gameplay
             var progressController = Locator.Get<ProgressController>();
             var itemsFactory = new ItemsProvider(Locator.Get<IConfigsProvider>());
             var playerInventory = new PlayerInventory(progressController, itemsFactory);
+            var currencyProvider = new CurrencyProvider(Locator.Get<IConfigsProvider>());
+            var playerWallet = new PlayerWallet(progressController, currencyProvider);
             var playerScore = new PlayerScore(progressController);
             KitchenController.Construct(CameraController);
             var customerContainer = new CustomersContainer();
             var customerFactory = new CustomerFactory(Locator);
             CustomerSpawner.Construct(customerFactory);
             _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, CustomerZoneController);
-            CustomerZoneController.Construct(progressController, playerScore, playerInventory);
+            CustomerZoneController.Construct(progressController, playerScore, playerWallet);
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
-            HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow, itemsFactory, ShopWindow);
-            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore);
-            ShopWindow.Construct(shopController);
+            HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet);
+            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
+            ShopWindow.Construct(shopController, currencyProvider);
 
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);
+            Locator.Register<PlayerWallet>(playerWallet).AddTo(_disposables);
             Locator.Register<PlayerScore>(playerScore).AddTo(_disposables);
             Locator.Register<CameraController>(CameraController).AddTo(_disposables);
             Locator.Register<RestaurantController>(RestaurantController).AddTo(_disposables);
@@ -64,8 +68,10 @@ namespace Client.Code.Gameplay
             progressController.RegisterActor(playerScore).AddTo(_disposables);
             progressController.RegisterActor(CustomerZoneController).AddTo(_disposables);
             progressController.RegisterActor(shopController).AddTo(_disposables);
+            progressController.RegisterActor(playerWallet).AddTo(_disposables);
 
             playerInventory.Initialize();
+            playerWallet.Initialize();
             playerScore.Initialize();
             KitchenController.Initialize();
             CustomerZoneController.Initialize();

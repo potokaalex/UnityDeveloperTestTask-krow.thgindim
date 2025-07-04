@@ -17,7 +17,7 @@ MonoBehaviour:
     Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
     Count: 1
   Price:
-    Item: {fileID: 11400000, guid: 4ef03eb3fbe4c6841b01e252ec65c71b, type: 2}
+    Type: 1
     Count: 2
   Description: used for upgrades and crafts.
   IsCurrency: 1

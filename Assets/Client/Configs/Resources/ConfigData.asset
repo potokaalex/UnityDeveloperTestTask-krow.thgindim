@@ -18,13 +18,15 @@ MonoBehaviour:
   - Key: 1
     Value: Gameplay
   Items:
-  - {fileID: 11400000, guid: 4ef03eb3fbe4c6841b01e252ec65c71b, type: 2}
-  - {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
   - {fileID: 11400000, guid: 8da2c80300641f04588bba38d396a874, type: 2}
   - {fileID: 11400000, guid: 7af6aec3dd19e01489a9b4a76e85d8b0, type: 2}
   - {fileID: 11400000, guid: 5400ac865a072994d8794d04ad9800cd, type: 2}
   ShopItems:
-  - {fileID: 11400000, guid: b15f8f369c0c8f34bb9b7dd3079acc21, type: 2}
   - {fileID: 11400000, guid: ece372b8aafae70419833ec042fab964, type: 2}
   - {fileID: 11400000, guid: 84356fb60a1583f43bc5b7f2c8defb8f, type: 2}
   - {fileID: 11400000, guid: 5860d9509e82a864088bbd23d82f3633, type: 2}
+  CurrencyItems:
+  - Type: 1
+    Icon: {fileID: -4592095305834777055, guid: a5e15db1384d7b54a9485ae4b9c22cef, type: 3}
+  - Type: 2
+    Icon: {fileID: -5821098215714624906, guid: aa0422cf1c09b344a9a411fc1cba743e, type: 3}

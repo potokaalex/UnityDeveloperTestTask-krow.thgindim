@@ -1,4 +1,5 @@
 ﻿using Client.Code.Gameplay.Item;
+using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.Shop
@@ -7,8 +8,8 @@ namespace Client.Code.Gameplay.Shop
     public class ShopItemConfig : ScriptableObject
     {
         public string Id;
-        public ItemCount ToInventory;
-        public ItemCount Price;
+        public ItemAmount ToInventory;
+        public CurrencyAmount Price;
         [TextArea] public string Description;
         public bool IsCurrency;
         public bool IsInfinite;

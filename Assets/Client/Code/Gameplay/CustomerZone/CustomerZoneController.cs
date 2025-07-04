@@ -3,9 +3,8 @@ using System.Linq;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
-using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Player;
-using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.CustomerZone
@@ -13,9 +12,9 @@ namespace Client.Code.Gameplay.CustomerZone
     public class CustomerZoneController : MonoBehaviour, IProgressWriter
     {
         public List<CustomerTableController> Tables;
-        public ItemCount TableBuildPrice;
+        public CurrencyAmount TableBuildPrice;
         private PlayerScore _playerScore;
-        private PlayerInventory _playerInventory;
+        private PlayerWallet _playerWallet;
 
         public int TablesAliveCount => Tables.Count(x => x.IsAlive);
 
@@ -23,9 +22,9 @@ namespace Client.Code.Gameplay.CustomerZone
 
         public EventAction OnTableBuild { get; } = new();
 
-        public void Construct(IProgressProvider progressProvider, PlayerScore playerScore, PlayerInventory playerInventory)
+        public void Construct(IProgressProvider progressProvider, PlayerScore playerScore, PlayerWallet playerWallet)
         {
-            _playerInventory = playerInventory;
+            _playerWallet = playerWallet;
             _playerScore = playerScore;
             for (var i = 0; i < Tables.Count; i++)
                 Tables[i].Construct(progressProvider);
@@ -48,7 +47,7 @@ namespace Client.Code.Gameplay.CustomerZone
 
         public void BuildTable()
         {
-            if (TablesAliveCount < TablesMaxCount && _playerInventory.Remove(TableBuildPrice.Item, TableBuildPrice.Count))
+            if (TablesAliveCount < TablesMaxCount && _playerWallet.Remove(TableBuildPrice))
             {
                 Tables.First(x => !x.IsAlive).Build();
                 _playerScore.Add(3);
