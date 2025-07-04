@@ -48,8 +48,9 @@ namespace Client.Code.Gameplay
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
             HomeWindow.Construct(playerInventory, CustomerZoneController, playerScore, gameplayManager, SettingsWindow, itemsFactory, ShopWindow);
-            ShopWindow.Construct(progressController, Locator.Get<IConfigsProvider>(), playerInventory);
-            
+            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore);
+            ShopWindow.Construct(shopController);
+
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);
             Locator.Register<PlayerScore>(playerScore).AddTo(_disposables);
@@ -57,12 +58,12 @@ namespace Client.Code.Gameplay
             Locator.Register<RestaurantController>(RestaurantController).AddTo(_disposables);
             Locator.Register<KitchenController>(KitchenController).AddTo(_disposables);
             Locator.Register<CustomersContainer>(customerContainer).AddTo(_disposables);
-            
+
             //init
             progressController.RegisterActor(playerInventory).AddTo(_disposables);
             progressController.RegisterActor(playerScore).AddTo(_disposables);
             progressController.RegisterActor(CustomerZoneController).AddTo(_disposables);
-            progressController.RegisterActor(ShopWindow).AddTo(_disposables);
+            progressController.RegisterActor(shopController).AddTo(_disposables);
 
             playerInventory.Initialize();
             playerScore.Initialize();
@@ -71,6 +72,7 @@ namespace Client.Code.Gameplay
             CustomerSpawner.Initialize();
             SettingsWindow.Initialize();
             HomeWindow.Initialize();
+            shopController.Initialize();
             ShopWindow.Initialize();
         }
 

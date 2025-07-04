@@ -1,47 +1,32 @@
-﻿using System.Collections.Generic;
-using Client.Code.Core.Config;
-using Client.Code.Core.Dispose;
-using Client.Code.Core.Progress;
-using Client.Code.Core.Progress.Actors;
+﻿using Client.Code.Core.Dispose;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
-using Client.Code.Gameplay.Player.Inventory;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.Shop
 {
-    public class ShopWindow : WindowView, IProgressWriter
+    public class ShopWindow : WindowView
     {
         public Transform CurrenciesRoot;
         public Transform OthersRoot;
         public ShopItemView ItemViewPrefab;
         public ButtonView CloseButton;
         private readonly CompositeDisposable _disposables = new();
-        private readonly List<ShopItemView> _views = new();
-        private IProgressProvider _progressProvider;
-        private IConfigsProvider _configsProvider;
-        private PlayerInventory _playerInventory;
+        private ShopController _shopController;
 
-        public void Construct(IProgressProvider progressProvider, IConfigsProvider configsProvider, PlayerInventory playerInventory)
-        {
-            _playerInventory = playerInventory;
-            _configsProvider = configsProvider;
-            _progressProvider = progressProvider;
-        }
+        public void Construct(ShopController shopController) => _shopController = shopController;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            foreach (var item in _configsProvider.Data.ShopItems)
+            foreach (var controller in _shopController.ItemControllers)
             {
-                if (!_progressProvider.Data.Shop.PurchasedItems.Contains(item.Id))
+                if (!controller.IsPurchased)
                 {
-                    var itemView = Instantiate(ItemViewPrefab, item.IsCurrency ? CurrenciesRoot : OthersRoot);
-                    itemView.Construct(_playerInventory, item);
-                    itemView.Initialize();
-                    itemView.AddTo(_disposables);
-                    _views.Add(itemView);
+                    var view = Instantiate(ItemViewPrefab, controller.IsCurrency ? CurrenciesRoot : OthersRoot);
+                    view.Initialize(controller);
+                    view.AddTo(_disposables);
                 }
             }
 
@@ -49,12 +34,5 @@ namespace Client.Code.Gameplay.Shop
         }
 
         public void Dispose() => _disposables.Dispose();
-
-        public void OnWrite(ProgressData progress)
-        {
-            foreach (var itemView in _views)
-                if (itemView.IsFullyPurchased)
-                    progress.Shop.PurchasedItems.Add(itemView.Item.Id);
-        }
     }
 }

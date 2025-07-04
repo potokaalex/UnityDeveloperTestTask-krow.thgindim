@@ -4,6 +4,7 @@ using Client.Code.Core.Scene;
 using Client.Code.Core.ServiceLocatorCode;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
+using UnityEditor;
 
 namespace Client.Code.MainMenu
 {
@@ -19,7 +20,7 @@ namespace Client.Code.MainMenu
         {
             //create
             SettingsWindow.Construct(Locator.Get<AudioController>());
-            
+
             //init
             SettingsWindow.Initialize();
             GameplayButton.OnClick.Subscribe(() => Locator.Get<SceneLoader>().Load(SceneName.Gameplay)).AddTo(_disposables);
@@ -36,7 +37,7 @@ namespace Client.Code.MainMenu
         private void Exit()
         {
 #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
+            EditorApplication.isPlaying = false;
 #else
             Application.Quit();
 #endif

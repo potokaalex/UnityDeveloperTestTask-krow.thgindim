@@ -7,9 +7,9 @@ namespace Client.Code.Gameplay.Shop
     public class ShopItemConfig : ScriptableObject
     {
         public string Id;
-        public ItemConfig Item;
-        public int Count;
+        public ItemCount ToInventory;
         public ItemCount Price;
+        [TextArea] public string Description;
         public bool IsCurrency;
         public bool IsInfinite;
     }

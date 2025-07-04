@@ -15,7 +15,7 @@ namespace Client.Code.Gameplay.Player
         public float Score { get; private set; }
 
         public EventAction OnScoreChanged { get; } = new();
-        
+
         public void Add(float value)
         {
             Score += value;

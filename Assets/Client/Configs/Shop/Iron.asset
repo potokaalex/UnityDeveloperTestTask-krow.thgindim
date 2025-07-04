@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Iron
   m_EditorClassIdentifier: 
   Id: iron
-  Item: {fileID: 11400000, guid: 7af6aec3dd19e01489a9b4a76e85d8b0, type: 2}
-  Count: 1
+  ToInventory:
+    Item: {fileID: 11400000, guid: 7af6aec3dd19e01489a9b4a76e85d8b0, type: 2}
+    Count: 1
   Price:
     Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
     Count: 1
+  Description: 'used for upgrades and crafts.
+
+    disappears after purchase'
   IsCurrency: 0
   IsInfinite: 0

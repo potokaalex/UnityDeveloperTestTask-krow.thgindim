@@ -16,7 +16,7 @@ namespace Client.Code.Bootstrap
         protected override void Install()
         {
             DontDestroyOnLoad(this);
-            
+
             //create
             var configsController = new ConfigsController();
             _progressController = new ProgressController();

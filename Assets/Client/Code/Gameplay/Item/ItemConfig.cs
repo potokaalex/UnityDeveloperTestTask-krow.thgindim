@@ -8,6 +8,5 @@ namespace Client.Code.Gameplay.Item
         public string Id;
         public Sprite Icon;
         public string Name;
-        [TextArea] public string Description;
     }
 }

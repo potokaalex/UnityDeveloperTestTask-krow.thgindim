@@ -1,5 +1,4 @@
 ﻿using System;
-using Client.Code.Gameplay.Item;
 
 namespace Client.Code.Gameplay.Player.Inventory
 {

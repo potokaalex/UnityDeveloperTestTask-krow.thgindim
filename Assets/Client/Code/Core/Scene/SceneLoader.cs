@@ -26,10 +26,10 @@ namespace Client.Code.Core.Scene
 
             while (!operation!.isDone)
                 yield return null;
-            
+
             _loadingScreen.Hide();
         }
-        
+
         private string GetNameStr(SceneName name) => _configsProvider.Data.Scenes.Find(x => x.Key == name).Value;
     }
 }

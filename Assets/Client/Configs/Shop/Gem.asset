@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Gem
   m_EditorClassIdentifier: 
   Id: gem
-  Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
-  Count: 1
-  IsCurrency: 1
+  ToInventory:
+    Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
+    Count: 1
   Price:
     Item: {fileID: 11400000, guid: 4ef03eb3fbe4c6841b01e252ec65c71b, type: 2}
     Count: 2
+  Description: used for upgrades and crafts.
+  IsCurrency: 1
   IsInfinite: 1

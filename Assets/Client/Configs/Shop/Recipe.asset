@@ -13,10 +13,14 @@ MonoBehaviour:
   m_Name: Recipe
   m_EditorClassIdentifier: 
   Id: recipe
-  Item: {fileID: 11400000, guid: 5400ac865a072994d8794d04ad9800cd, type: 2}
-  Count: 1
+  ToInventory:
+    Item: {fileID: 11400000, guid: 5400ac865a072994d8794d04ad9800cd, type: 2}
+    Count: 1
   Price:
     Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
     Count: 1
+  Description: 'used for upgrades and crafts.
+
+    disappears after purchase'
   IsCurrency: 0
   IsInfinite: 0
