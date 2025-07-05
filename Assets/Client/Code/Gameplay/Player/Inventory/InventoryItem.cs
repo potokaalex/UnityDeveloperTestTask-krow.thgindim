@@ -14,5 +14,7 @@ namespace Client.Code.Gameplay.Player.Inventory
             Count = count;
             CellIndex = cellIndex;
         }
+
+        public bool Valid => Config && Count > 0;
     }
 }

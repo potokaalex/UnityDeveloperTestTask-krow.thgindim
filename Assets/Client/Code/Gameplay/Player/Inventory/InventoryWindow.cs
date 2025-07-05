@@ -15,6 +15,7 @@ namespace Client.Code.Gameplay.Player.Inventory
         private readonly CompositeDisposable _disposables = new();
         private readonly Dictionary<int, InventoryCellView> _cells = new();
         private PlayerInventory _playerInventory;
+        private InventoryCellView _selected;
 
         public void Construct(PlayerInventory playerInventory) => _playerInventory = playerInventory;
 
@@ -28,6 +29,27 @@ namespace Client.Code.Gameplay.Player.Inventory
         }
 
         public void Dispose() => _disposables.Dispose();
+
+        public void OnSelection(InventoryCellView cell)
+        {
+            _selected?.UnSelect();
+
+            if (_selected == cell)
+                _selected = null;
+            else if(!_selected)
+            {
+                if (_playerInventory.Has(cell.CellIndex))
+                {
+                    _selected = cell;
+                    cell.Select();
+                }
+            }
+            else
+            {
+                _playerInventory.Move(_selected.CellIndex, cell.CellIndex);
+                _selected = null;
+            }
+        }
 
         private void ViewItems()
         {
@@ -45,7 +67,7 @@ namespace Client.Code.Gameplay.Player.Inventory
             for (var i = 0; i < _playerInventory.CellsCount; i++)
             {
                 var cell = Instantiate(CellPrefab, CellRoot);
-                cell.Initialize();
+                cell.Initialize(this, i);
                 _cells.Add(i, cell);
             }
         }

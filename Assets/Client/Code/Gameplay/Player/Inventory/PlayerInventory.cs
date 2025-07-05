@@ -10,7 +10,7 @@ namespace Client.Code.Gameplay.Player.Inventory
     {
         private readonly IProgressProvider _progressProvider;
         private readonly ItemsProvider _itemsProvider;
-        private List<InventoryItem> _items;
+        private List<InventoryItem> _items; //it is better to make an array.
 
         public PlayerInventory(IProgressProvider progressProvider, ItemsProvider itemsProvider)
         {
@@ -81,13 +81,34 @@ namespace Client.Code.Gameplay.Player.Inventory
             outList.Clear();
             outList.AddRange(_items);
         }
-        
+
         public int GetCount(ItemConfig item)
         {
             if (TryGetItem(item, out var index))
                 return _items[index].Count;
             return 0;
         }
+
+        public void Move(int fromCell, int toCell)
+        {
+            var fromItem = new InventoryItem();
+            if (TryGetItemInCell(fromCell, out var fromIndex)) 
+                fromItem = _items[fromIndex];
+
+            var toItem = new InventoryItem();
+            if (TryGetItemInCell(toCell, out var toIndex)) 
+                toItem = _items[toIndex];
+            
+            if(fromItem.Valid)
+                _items[fromIndex] = new InventoryItem(fromItem.Config, fromItem.Count, toCell);
+            if(toItem.Valid)
+                _items[toIndex] = new InventoryItem(toItem.Config, toItem.Count, fromCell);
+
+            if (fromItem.Valid || toItem.Valid)
+                OnChanged.Invoke();
+        }
+
+        public bool Has(int cellIndex) => TryGetItemInCell(cellIndex, out _);
 
         public void OnWrite(ProgressData progress)
         {
@@ -100,6 +121,21 @@ namespace Client.Code.Gameplay.Player.Inventory
         {
             _items[index] = item;
             OnChanged.Invoke();
+        }
+
+        private bool TryGetItemInCell(int cellIndex, out int itemIndex)
+        {
+            for (var i = 0; i < _items.Count; i++)
+            {
+                if (_items[i].Config && _items[i].CellIndex == cellIndex)
+                {
+                    itemIndex = i;
+                    return true;
+                }
+            }
+
+            itemIndex = -1;
+            return false;
         }
 
         private bool TryGetItem(ItemConfig config, out int itemIndex)
