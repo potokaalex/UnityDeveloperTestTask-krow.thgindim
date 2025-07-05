@@ -1,27 +1,13 @@
-﻿using Client.Code.Core.Progress;
-using Client.Code.Core.Progress.Actors;
-using Client.Code.Core.Rx;
+﻿using Client.Code.Gameplay.Player.Level;
 
 namespace Client.Code.Gameplay.Player
 {
-    public class PlayerScore : IProgressWriter
+    public class PlayerScore
     {
-        private readonly IProgressProvider _progressProvider;
+        private readonly PlayerLevel _playerLevel;
 
-        public PlayerScore(IProgressProvider progressProvider) => _progressProvider = progressProvider;
+        public PlayerScore(PlayerLevel playerLevel) => _playerLevel = playerLevel;
 
-        public void Initialize() => Score = _progressProvider.Data.Player.Score;
-
-        public float Score { get; private set; }
-
-        public EventAction OnScoreChanged { get; } = new();
-
-        public void Add(float value)
-        {
-            Score += value;
-            OnScoreChanged.Invoke();
-        }
-
-        public void OnWrite(ProgressData progress) => progress.Player.Score = Score;
+        public void Add(float value) => _playerLevel.AddProgress(value);
     }
 }

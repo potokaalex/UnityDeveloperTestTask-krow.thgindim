@@ -14,6 +14,7 @@ using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Level;
 using Client.Code.Gameplay.Restaurant;
 using Client.Code.Gameplay.Shop;
 
@@ -30,6 +31,7 @@ namespace Client.Code.Gameplay
         public SettingsWindow SettingsWindow;
         public ShopWindow ShopWindow;
         public InventoryWindow InventoryWindow;
+        public PlayerLevelCongratulationWindow PlayerLevelCongratulationWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
         private readonly CompositeDisposable _disposables = new();
@@ -40,9 +42,10 @@ namespace Client.Code.Gameplay
             var progressController = Locator.Get<ProgressController>();
             var itemsFactory = new ItemsProvider(Locator.Get<IConfigsProvider>());
             var playerInventory = new PlayerInventory(progressController, itemsFactory);
-            var currencyProvider = new CurrencyProvider(Locator.Get<IConfigsProvider>());
-            var playerWallet = new PlayerWallet(progressController, currencyProvider);
-            var playerScore = new PlayerScore(progressController);
+            var currencyFactory = new CurrencyFactory(Locator.Get<IConfigsProvider>());
+            var playerWallet = new PlayerWallet(progressController, currencyFactory);
+            var playerLevel = new PlayerLevel(progressController, currencyFactory, playerWallet);
+            var playerScore = new PlayerScore(playerLevel);
             var craftController = new CraftController(playerInventory, playerScore, Locator.Get<IConfigsProvider>());
             KitchenController.Construct(CameraController);
             var customerContainer = new CustomersContainer();
@@ -54,10 +57,11 @@ namespace Client.Code.Gameplay
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
             InventoryWindow.Construct(playerInventory, craftController);
-            HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet, InventoryWindow);
+            HomeWindow.Construct(CustomerZoneController, gameplayManager, SettingsWindow, ShopWindow, playerWallet, InventoryWindow, playerLevel);
             var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
             ShopWindow.Construct(shopController);
-
+            PlayerLevelCongratulationWindow.Construct(playerLevel);
+            
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);
             Locator.Register<PlayerWallet>(playerWallet).AddTo(_disposables);
@@ -69,14 +73,14 @@ namespace Client.Code.Gameplay
 
             //init
             progressController.RegisterActor(playerInventory).AddTo(_disposables);
-            progressController.RegisterActor(playerScore).AddTo(_disposables);
+            progressController.RegisterActor(playerLevel).AddTo(_disposables);
             progressController.RegisterActor(CustomerZoneController).AddTo(_disposables);
             progressController.RegisterActor(shopController).AddTo(_disposables);
             progressController.RegisterActor(playerWallet).AddTo(_disposables);
 
             playerInventory.Initialize();
             playerWallet.Initialize();
-            playerScore.Initialize();
+            playerLevel.Initialize();
             craftController.Initialize();
             KitchenController.Initialize();
             CustomerZoneController.Initialize();
@@ -86,6 +90,7 @@ namespace Client.Code.Gameplay
             HomeWindow.Initialize();
             shopController.Initialize();
             ShopWindow.Initialize();
+            PlayerLevelCongratulationWindow.Initialize();
         }
 
         protected override void UnInstall()
@@ -95,6 +100,7 @@ namespace Client.Code.Gameplay
             HomeWindow.Dispose();
             ShopWindow.Dispose();
             _disposables.Dispose();
+            PlayerLevelCongratulationWindow.Dispose();
         }
 
         public void Update()

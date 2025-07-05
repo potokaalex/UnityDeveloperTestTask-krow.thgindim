@@ -10,12 +10,12 @@ namespace Client.Code.Gameplay.Player
     {
         private readonly Dictionary<CurrencyType, CurrencyItem> _items = new();
         private readonly IProgressProvider _progressProvider;
-        private readonly CurrencyProvider _currencyProvider;
+        private readonly CurrencyFactory _currencyFactory;
 
-        public PlayerWallet(IProgressProvider progressProvider, CurrencyProvider currencyProvider)
+        public PlayerWallet(IProgressProvider progressProvider, CurrencyFactory currencyFactory)
         {
             _progressProvider = progressProvider;
-            _currencyProvider = currencyProvider;
+            _currencyFactory = currencyFactory;
         }
 
         public EventAction OnChanged { get; } = new();
@@ -23,7 +23,7 @@ namespace Client.Code.Gameplay.Player
         public void Initialize()
         {
             foreach (var item in _progressProvider.Data.Player.WalletItems)
-                _items.Add(item.Type, new CurrencyItem(item.Type, item.Count, _currencyProvider.GetConfig(item.Type)));
+                _items.Add(item.Type, new CurrencyItem(item.Type, item.Count, _currencyFactory.GetConfig(item.Type)));
         }
 
         public void Add(CurrencyAmount item) =>
@@ -48,7 +48,7 @@ namespace Client.Code.Gameplay.Player
                 if (item.Key == type)
                     return item.Value;
 
-            return new CurrencyItem(type, 0, _currencyProvider.GetConfig(type));
+            return new CurrencyItem(type, 0, _currencyFactory.GetConfig(type));
         }
 
         public void OnWrite(ProgressData progress)

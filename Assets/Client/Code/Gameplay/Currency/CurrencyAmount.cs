@@ -8,5 +8,11 @@ namespace Client.Code.Gameplay.Currency
     {
         [FormerlySerializedAs("Item")] public CurrencyConfig Config;
         public int Count;
+
+        public CurrencyAmount(CurrencyConfig config, int count)
+        {
+            Config = config;
+            Count = count;
+        }
     }
 }

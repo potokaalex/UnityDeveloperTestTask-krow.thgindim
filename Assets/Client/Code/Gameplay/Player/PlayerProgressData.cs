@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Level;
 
 namespace Client.Code.Gameplay.Player
 {
@@ -10,6 +11,6 @@ namespace Client.Code.Gameplay.Player
     {
         public List<InventoryItemProgressData> InventoryItems = new();
         public List<CurrencyItemProgressData> WalletItems = new();
-        public float Score;
+        public PlayerLevelProgress Level = new();
     }
 }
