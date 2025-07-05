@@ -35,6 +35,7 @@ namespace Client.Code.Gameplay
         public InventoryWindow InventoryWindow;
         public PlayerLevelCongratulationWindow PlayerLevelCongratulationWindow;
         public BuildingWindow BuildingWindow;
+        public KitchenUpgradeWindow KitchenUpgradeWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
         private readonly CompositeDisposable _disposables = new();
@@ -50,7 +51,8 @@ namespace Client.Code.Gameplay
             var playerLevel = new PlayerLevel(progressController, currencyFactory, playerWallet);
             var playerScore = new PlayerScore(playerLevel);
             var craftController = new CraftController(playerInventory, playerScore, Locator.Get<IConfigsProvider>());
-            KitchenController.Construct(CameraController);
+            KitchenUpgradeWindow.Construct(KitchenController);
+            KitchenController.Construct(CameraController, playerWallet, progressController, currencyFactory);
             var customerContainer = new CustomersContainer();
             var customerFactory = new CustomerFactory(Locator);
             CustomerSpawner.Construct(customerFactory);
@@ -82,6 +84,7 @@ namespace Client.Code.Gameplay
             progressController.RegisterActor(CustomerZoneController).AddTo(_disposables);
             progressController.RegisterActor(shopController).AddTo(_disposables);
             progressController.RegisterActor(playerWallet).AddTo(_disposables);
+            progressController.RegisterActor(KitchenController).AddTo(_disposables);
 
             playerInventory.Initialize();
             playerWallet.Initialize();
@@ -96,6 +99,7 @@ namespace Client.Code.Gameplay
             BuildingWindow.Initialize();
             shopController.Initialize();
             ShopWindow.Initialize();
+            KitchenUpgradeWindow.Initialize();
             PlayerLevelCongratulationWindow.Initialize();
         }
 
@@ -108,6 +112,7 @@ namespace Client.Code.Gameplay
             BuildingWindow.Dispose();
             _disposables.Dispose();
             PlayerLevelCongratulationWindow.Dispose();
+            KitchenUpgradeWindow.Dispose();
         }
 
         public void Update()

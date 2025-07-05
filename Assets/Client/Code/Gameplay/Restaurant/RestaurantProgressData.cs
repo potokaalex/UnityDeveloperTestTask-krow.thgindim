@@ -9,5 +9,6 @@ namespace Client.Code.Gameplay.Restaurant
     {
         public List<CustomerTableProgressData> CustomerTables = new();
         public bool HasReception;
+        public int KitchenLevel = 1;
     }
 }
