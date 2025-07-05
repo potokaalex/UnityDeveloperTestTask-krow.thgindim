@@ -5,6 +5,7 @@ using Client.Code.Core.Progress;
 using Client.Code.Core.Scene;
 using Client.Code.Core.ServiceLocatorCode;
 using Client.Code.Core.Settings;
+using Client.Code.Gameplay.Craft;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Customer;
 using Client.Code.Gameplay.CustomerZone;
@@ -42,6 +43,7 @@ namespace Client.Code.Gameplay
             var currencyProvider = new CurrencyProvider(Locator.Get<IConfigsProvider>());
             var playerWallet = new PlayerWallet(progressController, currencyProvider);
             var playerScore = new PlayerScore(progressController);
+            var craftController = new CraftController(playerInventory, playerScore, Locator.Get<IConfigsProvider>());
             KitchenController.Construct(CameraController);
             var customerContainer = new CustomersContainer();
             var customerFactory = new CustomerFactory(Locator);
@@ -51,7 +53,7 @@ namespace Client.Code.Gameplay
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
-            InventoryWindow.Construct(playerInventory);
+            InventoryWindow.Construct(playerInventory, craftController);
             HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet, InventoryWindow);
             var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
             ShopWindow.Construct(shopController);
@@ -75,6 +77,7 @@ namespace Client.Code.Gameplay
             playerInventory.Initialize();
             playerWallet.Initialize();
             playerScore.Initialize();
+            craftController.Initialize();
             KitchenController.Initialize();
             CustomerZoneController.Initialize();
             CustomerSpawner.Initialize();

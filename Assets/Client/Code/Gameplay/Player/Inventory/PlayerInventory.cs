@@ -79,7 +79,9 @@ namespace Client.Code.Gameplay.Player.Inventory
         public void GetAll(List<InventoryItem> outList)
         {
             outList.Clear();
-            outList.AddRange(_items);
+            foreach (var item in _items)
+                if(item.Valid)
+                    outList.Add(item);
         }
 
         public int GetCount(ItemConfig item)
@@ -110,6 +112,8 @@ namespace Client.Code.Gameplay.Player.Inventory
 
         public bool Has(int cellIndex) => TryGetItemInCell(cellIndex, out _);
 
+        public bool Has(ItemAmount amount) => GetCount(amount.Config) >= amount.Count;
+
         public void OnWrite(ProgressData progress)
         {
             progress.Player.InventoryItems.Clear();
@@ -120,6 +124,8 @@ namespace Client.Code.Gameplay.Player.Inventory
         private void Set(int index, InventoryItem item)
         {
             _items[index] = item;
+            if (!item.Valid)
+                _items.RemoveAt(index);
             OnChanged.Invoke();
         }
 

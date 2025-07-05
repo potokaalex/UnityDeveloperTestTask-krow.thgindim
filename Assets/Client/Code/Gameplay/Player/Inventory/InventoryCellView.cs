@@ -1,11 +1,12 @@
-﻿using Client.Code.Core.Dispose;
+﻿using System;
+using Client.Code.Core.Dispose;
 using Client.Code.Core.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Client.Code.Gameplay.Player.Inventory
 {
-    public class InventoryCellView : MonoBehaviour
+    public class InventoryCellView : MonoBehaviour, IDisposable
     {
         public Image Background;
         public Image Icon;
@@ -16,6 +17,8 @@ namespace Client.Code.Gameplay.Player.Inventory
         private InventoryWindow _inventoryWindow;
 
         public int CellIndex { get; private set; }
+
+        public bool CanView { get; set; } = true;
 
         public void Initialize(InventoryWindow inventoryWindow, int cellIndex)
         {
@@ -29,26 +32,22 @@ namespace Client.Code.Gameplay.Player.Inventory
 
         public void View(InventoryItem item)
         {
-            Icon.sprite = item.Config.Icon;
-            Icon.color = Color.white;
+            if (CanView)
+            {
+                Icon.sprite = item.Config.Icon;
+                Icon.color = Color.white;
+            }
+            else 
+                Clear();
         }
 
-        public void Clear() => 
+        public void Clear() =>
             Icon.color = Color.clear;
 
         public void Select() => Background.color = SelectedColor;
 
         public void UnSelect() => Background.color = DefaultColor;
-        
-        private void OnClick()
-        {
-            _inventoryWindow.OnSelection(this);
 
-            //2) перенос.
-
-            //1) перенос айтемов между клетками.
-            //при нажатии на клетку, айтем типа выделяется, если нажмём на него повторно, то выделение снимется.
-            //если нажмём на свободную клетку, то айтем переместиться в неё.
-        }
+        private void OnClick() => _inventoryWindow.OnSelection(this);
     }
 }

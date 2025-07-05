@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Client.Code.Core.Scene;
+using Client.Code.Gameplay.Craft;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Shop;
@@ -14,5 +15,6 @@ namespace Client.Code.Core.Config
         public List<ItemConfig> Items;
         public List<ShopItemConfig> ShopItems;
         public List<CurrencyConfig> CurrencyItems;
+        public List<CraftItemConfig> CraftItems;
     }
 }

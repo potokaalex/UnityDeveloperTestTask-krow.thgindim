@@ -29,3 +29,14 @@ MonoBehaviour:
   CurrencyItems:
   - {fileID: 11400000, guid: 929e4811b870cfc4f8bc75d71984e0bb, type: 2}
   - {fileID: 11400000, guid: 8386ad06bbbbb4241b779c05ebbfb781, type: 2}
+  CraftItems:
+  - InItems:
+    - Config: {fileID: 11400000, guid: 8da2c80300641f04588bba38d396a874, type: 2}
+      Count: 1
+    - Config: {fileID: 11400000, guid: 7af6aec3dd19e01489a9b4a76e85d8b0, type: 2}
+      Count: 1
+    - Config: {fileID: 11400000, guid: 5400ac865a072994d8794d04ad9800cd, type: 2}
+      Count: 1
+    OutItem:
+      Config: {fileID: 11400000, guid: 79fb94e4b7515ab4fb258fba2a60bc6b, type: 2}
+      Count: 1
