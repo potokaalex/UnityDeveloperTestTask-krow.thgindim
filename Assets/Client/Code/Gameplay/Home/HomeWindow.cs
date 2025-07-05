@@ -4,6 +4,7 @@ using Client.Code.Core.UI;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Player;
+using Client.Code.Gameplay.Player.Inventory;
 using Client.Code.Gameplay.Shop;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,7 @@ namespace Client.Code.Gameplay.Home
         public ButtonView LoadMainMenuButton;
         public ButtonView OpenSettingsButton;
         public ButtonView OpenShopButton;
+        public ButtonView OpenInventoryButton;
         private readonly CompositeDisposable _disposable = new();
         private CustomerZoneController _customerZoneController;
         private PlayerScore _playerScore;
@@ -26,10 +28,12 @@ namespace Client.Code.Gameplay.Home
         private SettingsWindow _settingsWindow;
         private ShopWindow _shopWindow;
         private PlayerWallet _playerWallet;
+        private InventoryWindow _inventoryWindow;
 
         public void Construct(CustomerZoneController customerZoneController, PlayerScore playerScore, GameplayManager gameplayManager,
-            SettingsWindow settingsWindow, ShopWindow shopWindow, PlayerWallet playerWallet)
+            SettingsWindow settingsWindow, ShopWindow shopWindow, PlayerWallet playerWallet, InventoryWindow inventoryWindow)
         {
+            _inventoryWindow = inventoryWindow;
             _playerWallet = playerWallet;
             _gameplayManager = gameplayManager;
             _playerScore = playerScore;
@@ -48,6 +52,7 @@ namespace Client.Code.Gameplay.Home
             UpdateView();
             OpenSettingsButton.OnClick.Subscribe(_settingsWindow.Open).AddTo(_disposable);
             OpenShopButton.OnClick.Subscribe(_shopWindow.Open).AddTo(_disposable);
+            OpenInventoryButton.OnClick.Subscribe(_inventoryWindow.Open).AddTo(_disposable);
         }
 
         public void Dispose() => _disposable.Dispose();

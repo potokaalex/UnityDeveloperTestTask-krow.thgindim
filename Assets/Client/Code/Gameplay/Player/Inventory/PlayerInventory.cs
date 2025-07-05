@@ -34,16 +34,16 @@ namespace Client.Code.Gameplay.Player.Inventory
             if (amount.Count <= 0)
                 return false;
 
-            if (TryGetItem(amount.Item, out var itemIndex))
+            if (TryGetItem(amount.Config, out var itemIndex))
             {
-                Set(itemIndex, new InventoryItem(amount.Item, _items[itemIndex].Count + amount.Count, _items[itemIndex].CellIndex));
+                Set(itemIndex, new InventoryItem(amount.Config, _items[itemIndex].Count + amount.Count, _items[itemIndex].CellIndex));
                 return true;
             }
 
             if (TryGetEmptyCell(out var cellIndex))
             {
                 _items.Add(default);
-                Set(_items.Count - 1, new InventoryItem(amount.Item, amount.Count, cellIndex));
+                Set(_items.Count - 1, new InventoryItem(amount.Config, amount.Count, cellIndex));
                 return true;
             }
 
@@ -55,12 +55,12 @@ namespace Client.Code.Gameplay.Player.Inventory
             if (amount.Count <= 0)
                 return true;
 
-            if (TryGetItem(amount.Item, out var itemIndex))
+            if (TryGetItem(amount.Config, out var itemIndex))
             {
                 var i = _items[itemIndex];
                 if (i.Count >= amount.Count)
                 {
-                    Set(itemIndex, new InventoryItem(amount.Item, i.Count - amount.Count, i.CellIndex));
+                    Set(itemIndex, new InventoryItem(amount.Config, i.Count - amount.Count, i.CellIndex));
                     return true;
                 }
 
@@ -76,6 +76,12 @@ namespace Client.Code.Gameplay.Player.Inventory
             return _items[index];
         }
 
+        public void GetAll(List<InventoryItem> outList)
+        {
+            outList.Clear();
+            outList.AddRange(_items);
+        }
+        
         public int GetCount(ItemConfig item)
         {
             if (TryGetItem(item, out var index))

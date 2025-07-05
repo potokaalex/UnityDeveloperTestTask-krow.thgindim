@@ -19,16 +19,16 @@ namespace Client.Code.Gameplay.Shop
         {
             if (IsCurrency)
             {
-                if (ToInventory.Item)
+                if (ToInventory.Config)
                 {
                     Debug.LogWarning($"Cant use {nameof(ToInventory)} when IsCurrency");
-                    ToInventory.Item = null;
+                    ToInventory.Config = null;
                 }
             }
-            else if(ToWallet.Item)
+            else if(ToWallet.Config)
             {
                 Debug.LogWarning($"Cant use {nameof(ToWallet)} when not IsCurrency");
-                ToWallet.Item = null;
+                ToWallet.Config = null;
             }
         }
     }

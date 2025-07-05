@@ -24,7 +24,7 @@ namespace Client.Code.Gameplay.Shop
             Icon.sprite = _controller.Icon;
             Header.text = _controller.Name;
             Description.text = _controller.Description;
-            PriceIcon.sprite = _controller.Price.Item.Icon;
+            PriceIcon.sprite = _controller.Price.Config.Icon;
             PriceCount.text = _controller.Price.Count.ToString();
             _controller.IsPurchasedChanged.Subscribe(UpdateView).AddTo(_disposable);
             BuyButton.OnClick.Subscribe(() => controller.TryPurchase()).AddTo(_disposable);

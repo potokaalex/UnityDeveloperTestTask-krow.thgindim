@@ -27,15 +27,15 @@ namespace Client.Code.Gameplay.Player
         }
 
         public void Add(CurrencyAmount item) =>
-            Set(new CurrencyItem(item.Item.Type, Get(item.Item).Count + item.Count, item.Item));
+            Set(new CurrencyItem(item.Config.Type, Get(item.Config).Count + item.Count, item.Config));
 
         public bool Remove(CurrencyAmount item)
         {
-            var inWallet = Get(item.Item);
+            var inWallet = Get(item.Config);
             if (inWallet.Count < item.Count)
                 return false;
 
-            Set(new CurrencyItem(item.Item.Type, inWallet.Count - item.Count, item.Item));
+            Set(new CurrencyItem(item.Config.Type, inWallet.Count - item.Count, item.Config));
             return true;
         }
 

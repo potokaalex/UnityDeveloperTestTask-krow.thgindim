@@ -28,6 +28,7 @@ namespace Client.Code.Gameplay
         public HomeWindow HomeWindow;
         public SettingsWindow SettingsWindow;
         public ShopWindow ShopWindow;
+        public InventoryWindow InventoryWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
         private readonly CompositeDisposable _disposables = new();
@@ -50,7 +51,8 @@ namespace Client.Code.Gameplay
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
-            HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet);
+            InventoryWindow.Construct(playerInventory);
+            HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet, InventoryWindow);
             var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
             ShopWindow.Construct(shopController);
 
@@ -77,6 +79,7 @@ namespace Client.Code.Gameplay
             CustomerZoneController.Initialize();
             CustomerSpawner.Initialize();
             SettingsWindow.Initialize();
+            InventoryWindow.Initialize();
             HomeWindow.Initialize();
             shopController.Initialize();
             ShopWindow.Initialize();
@@ -85,6 +88,7 @@ namespace Client.Code.Gameplay
         protected override void UnInstall()
         {
             SettingsWindow.Dispose();
+            InventoryWindow.Dispose();
             HomeWindow.Dispose();
             ShopWindow.Dispose();
             _disposables.Dispose();

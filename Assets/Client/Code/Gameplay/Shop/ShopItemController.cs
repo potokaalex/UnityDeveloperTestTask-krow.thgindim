@@ -33,7 +33,7 @@ namespace Client.Code.Gameplay.Shop
 
         public bool IsCurrency => _config.IsCurrency;
 
-        public Sprite Icon => _config.IsCurrency ? _config.ToWallet.Item.Icon : _config.ToInventory.Item.Icon;
+        public Sprite Icon => _config.IsCurrency ? _config.ToWallet.Config.Icon : _config.ToInventory.Config.Icon;
 
         public string Name => _config.Name;
 
