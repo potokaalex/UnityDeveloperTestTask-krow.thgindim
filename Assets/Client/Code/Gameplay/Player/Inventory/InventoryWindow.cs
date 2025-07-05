@@ -36,13 +36,6 @@ namespace Client.Code.Gameplay.Player.Inventory
             ViewItems();
         }
 
-        public override void Close()
-        {
-            base.Close();
-            foreach (var cell in _cells)
-                cell.Value.CanView = true;
-        }
-
         public void Dispose() => _disposables.Dispose();
 
         public void OnSelection(InventoryCellView cell)

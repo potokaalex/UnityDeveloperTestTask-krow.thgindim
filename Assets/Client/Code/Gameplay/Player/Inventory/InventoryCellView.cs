@@ -1,6 +1,7 @@
 ﻿using System;
 using Client.Code.Core.Dispose;
 using Client.Code.Core.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,12 +14,11 @@ namespace Client.Code.Gameplay.Player.Inventory
         public ButtonView Button;
         public Color DefaultColor;
         public Color SelectedColor;
+        public TextMeshProUGUI CountText;
         private readonly CompositeDisposable _disposables = new();
         private InventoryWindow _inventoryWindow;
 
         public int CellIndex { get; private set; }
-
-        public bool CanView { get; set; } = true;
 
         public void Initialize(InventoryWindow inventoryWindow, int cellIndex)
         {
@@ -32,17 +32,16 @@ namespace Client.Code.Gameplay.Player.Inventory
 
         public void View(InventoryItem item)
         {
-            if (CanView)
-            {
-                Icon.sprite = item.Config.Icon;
-                Icon.color = Color.white;
-            }
-            else 
-                Clear();
+            Icon.sprite = item.Config.Icon;
+            Icon.color = Color.white;
+            CountText.SetText(item.Count.ToString());
         }
 
-        public void Clear() =>
+        public void Clear()
+        {
             Icon.color = Color.clear;
+            CountText.SetText("");
+        }
 
         public void Select() => Background.color = SelectedColor;
 

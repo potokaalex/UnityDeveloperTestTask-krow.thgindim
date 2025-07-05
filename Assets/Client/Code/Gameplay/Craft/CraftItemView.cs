@@ -18,13 +18,19 @@ namespace Client.Code.Gameplay.Craft
         public void Initialize(CraftItemController controller)
         {
             _controller = controller;
-            CraftButton.OnClick.Subscribe(TryCraft).AddTo(_disposables);
+            CraftButton.OnClick.Subscribe(() => _controller.TryCraft()).AddTo(_disposables);
+            InitializeCells();
             View();
         }
 
         public void Dispose() => _disposables.Dispose();
 
-        private void TryCraft() => _controller.TryCraft();
+        private void InitializeCells()
+        {
+            foreach (var cell in InputCells)
+                cell.Initialize();
+            OutputCell.Initialize();
+        }
 
         private void View()
         {
