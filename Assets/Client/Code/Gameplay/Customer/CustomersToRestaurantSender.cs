@@ -27,10 +27,10 @@ namespace Client.Code.Gameplay.Customer
                     validControllers.Add(controller);
             }
 
-            while (validControllers.Count > 0 && _customerZoneController.HasEmptyTable())
+            while (validControllers.Count > 0 && _customerZoneController.Tables.HasEmpty())
             {
                 var index = Random.Range(0, validControllers.Count);
-                validControllers[index].GoRestaurant(_customerZoneController.ReserveEmptyTable());
+                validControllers[index].GoRestaurant(_customerZoneController.Tables.ReserveEmpty());
                 validControllers.RemoveAt(index);
             }
         }

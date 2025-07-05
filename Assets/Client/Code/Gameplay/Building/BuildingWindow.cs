@@ -8,9 +8,8 @@ namespace Client.Code.Gameplay.Building
     public class BuildingWindow : WindowView
     {
         public ButtonView CloseButton;
-        public BuildingWindowItem CustomerTable;
-        public BuildingWindowItem Waiter;
-        public BuildingWindowItem Reception;
+        public BuildingControllerView CustomerTable;
+        public BuildingControllerView Reception;
         private readonly CompositeDisposable _disposable = new();
         private CustomerZoneController _customerZoneController;
 
@@ -20,27 +19,29 @@ namespace Client.Code.Gameplay.Building
         {
             base.Initialize();
             CloseButton.OnClick.Subscribe(Close).AddTo(_disposable);
-            InitializeCustomerTable();
+            CustomerTable.Initialize(_customerZoneController.Tables);
+            Reception.Initialize(_customerZoneController.ReceptionTable);
         }
 
-        public void Dispose() => _disposable.Dispose();
+        public void Dispose()
+        {
+            _disposable.Dispose();
+            CustomerTable.Dispose();
+            Reception.Dispose();
+        }
 
         public override void Open()
         {
             base.Open();
-            UpdateView();
+            CustomerTable.Setup();
+            Reception.Setup();
         }
 
-        private void UpdateView()
+        public override void Close()
         {
-            CustomerTable.gameObject.SetActive(_customerZoneController.TablesBuiltCount < _customerZoneController.TablesMaxCount);
-            CustomerTable.PriceView.View(_customerZoneController.TableBuildPrice);
-        }
-
-        private void InitializeCustomerTable()
-        {
-            CustomerTable.PurchaseButton.OnClick.Subscribe(_customerZoneController.TryBuildTable).AddTo(_disposable);
-            _customerZoneController.OnTableBuild.Subscribe(UpdateView).When(() => IsOpen).AddTo(_disposable);
+            base.Close();
+            CustomerTable.Clear();
+            Reception.Clear();
         }
     }
 }

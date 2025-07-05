@@ -77,7 +77,7 @@ MonoBehaviour:
   ToCameraRotator: {fileID: 3697352631744006704}
   CreateOrderTime: 5
   EatTime: 5
-  MoneyPayed:
+  InitialMoneyPayed:
     Config: {fileID: 11400000, guid: 929e4811b870cfc4f8bc75d71984e0bb, type: 2}
     Count: 1
 --- !u!1 &1171761339202723853

@@ -22,7 +22,7 @@ namespace Client.Code.Gameplay.Customer
         public ToCameraRotator ToCameraRotator;
         public float CreateOrderTime;
         public float EatTime;
-        public CurrencyAmount MoneyPayed;
+        public CurrencyAmount InitialMoneyPayed;
         private RestaurantController _restaurantController;
         private KitchenController _kitchenController;
         private CustomerTableController _customerTable;
@@ -31,17 +31,20 @@ namespace Client.Code.Gameplay.Customer
         private FoodCreationOrder _currentOrder;
         private PlayerScore _playerScore;
         private PlayerWallet _playerWallet;
+        private CustomerZoneController _customerZoneController;
         private INode _tree;
+        private CurrencyAmount _moneyPayed;
 
         public bool CanGoRestaurant => !_helper.GoingToRestaurant;
 
         public void Construct(RestaurantController restaurantController, CameraController cameraController, KitchenController kitchenController,
-            PlayerScore playerScore, PlayerWallet playerWallet, Vector3 areaMin, Vector3 areaMax)
+            PlayerScore playerScore, PlayerWallet playerWallet, CustomerZoneController customerZoneController, Vector3 areaMin, Vector3 areaMax)
         {
             _playerWallet = playerWallet;
             _kitchenController = kitchenController;
             _restaurantController = restaurantController;
             _playerScore = playerScore;
+            _customerZoneController = customerZoneController;
             ToCameraRotator.Construct(cameraController);
             _helper = new CustomerHelper(NavMeshAgent);
             _wanderingNode = new CustomerWanderingNode(_helper, areaMin, areaMax);
@@ -56,7 +59,7 @@ namespace Client.Code.Gameplay.Customer
 
             _tree = new RepeatNode(new SequenceNode(
                 _wanderingNode,
-                EnterRestaurant(),
+                TryMoveToReception(),
                 MoveToCooks(),
                 CreateOrder(),
                 MoveToTable(),
@@ -78,7 +81,24 @@ namespace Client.Code.Gameplay.Customer
             _helper.GoingToRestaurant = true;
         }
 
-        private INode EnterRestaurant() => _helper.MoveTo(() => _restaurantController.EnterPoint.position);
+        private INode TryMoveToReception()
+        {
+            return new SelectorNode(
+                new SequenceNode(
+                    new ConditionNode(() => _customerZoneController.ReceptionTable.IsBuilt),
+                    _helper.MoveTo(() => _customerZoneController.ReceptionTable.CustomerPoint.position),
+                    new ActionNode(() => TimerView.Show()),
+                    new TimerNode(() => _customerZoneController.ReceptionTable.ServiceTime,
+                        t => { TimerView.View(_customerZoneController.ReceptionTable.ServiceTime, t); }, () =>
+                        {
+                            TimerView.Hide();
+                            _moneyPayed = InitialMoneyPayed;
+                            _moneyPayed.Count *= 2;
+                        })
+                ),
+                new ActionNode(() => _moneyPayed = InitialMoneyPayed)
+            );
+        }
 
         private INode LeaveRestaurant()
         {
@@ -156,7 +176,7 @@ namespace Client.Code.Gameplay.Customer
                         subscription.Dispose();
                         GiveMoneyIndicator.SetActive(false);
                         _customerTable.Clear();
-                        _playerWallet.Add(MoneyPayed);
+                        _playerWallet.Add(_moneyPayed);
                         _playerScore.Add(1);
                         return true;
                     }

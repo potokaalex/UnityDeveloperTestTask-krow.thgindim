@@ -1,4 +1,5 @@
 ﻿using Client.Code.Core.ServiceLocatorCode;
+using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Wallet;
@@ -19,7 +20,7 @@ namespace Client.Code.Gameplay.Customer
             controller.transform.position = position;
             controller.Construct(_serviceLocator.Get<RestaurantController>(), _serviceLocator.Get<CameraController>(),
                 _serviceLocator.Get<KitchenController>(), _serviceLocator.Get<PlayerScore>(), _serviceLocator.Get<PlayerWallet>(),
-                areaMin, areaMax);
+                _serviceLocator.Get<CustomerZoneController>(), areaMin, areaMax);
             controller.Initialize();
             _serviceLocator.Get<CustomersContainer>().Add(controller);
         }

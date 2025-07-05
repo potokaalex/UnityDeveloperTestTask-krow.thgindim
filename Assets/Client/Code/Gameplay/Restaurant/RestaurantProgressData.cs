@@ -8,5 +8,6 @@ namespace Client.Code.Gameplay.Restaurant
     public class RestaurantProgressData
     {
         public List<CustomerTableProgressData> CustomerTables = new();
+        public bool HasReception;
     }
 }

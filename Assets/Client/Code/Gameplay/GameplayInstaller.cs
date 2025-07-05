@@ -74,6 +74,7 @@ namespace Client.Code.Gameplay
             Locator.Register<RestaurantController>(RestaurantController).AddTo(_disposables);
             Locator.Register<KitchenController>(KitchenController).AddTo(_disposables);
             Locator.Register<CustomersContainer>(customerContainer).AddTo(_disposables);
+            Locator.Register<CustomerZoneController>(CustomerZoneController).AddTo(_disposables);
 
             //init
             progressController.RegisterActor(playerInventory).AddTo(_disposables);
