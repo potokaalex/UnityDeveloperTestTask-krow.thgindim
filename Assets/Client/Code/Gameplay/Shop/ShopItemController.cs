@@ -55,6 +55,9 @@ namespace Client.Code.Gameplay.Shop
 
             if (_playerWallet.Remove(_config.Price))
             {
+                if (!_config.IsEndless)
+                    IsPurchased = true;
+
                 if (_config.IsCurrency)
                 {
                     _playerWallet.Add(_config.ToWallet);
@@ -64,7 +67,6 @@ namespace Client.Code.Gameplay.Shop
 
                 if (_playerInventory.Add(_config.ToInventory))
                 {
-                    IsPurchased = true;
                     IsPurchasedChanged.Invoke();
                     _playerScore.Add(1);
                     return true;

@@ -15,12 +15,13 @@ namespace Client.Code.Gameplay.Craft
             Icon.color = Color.clear;
             Count.SetText("");
         }
-        
+
         public void View(ItemAmount item)
         {
             Icon.sprite = item.Config.Icon;
             Icon.color = Color.white;
-            Count.SetText(item.Count.ToString());
+            if (item.Count > 1)
+                Count.SetText(item.Count.ToString());
         }
     }
 }

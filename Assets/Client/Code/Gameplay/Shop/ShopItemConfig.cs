@@ -14,7 +14,8 @@ namespace Client.Code.Gameplay.Shop
         public string Name;
         [TextArea] public string Description;
         public bool IsCurrency;
-
+        public bool IsEndless;
+        
         private void OnValidate()
         {
             if (IsCurrency)

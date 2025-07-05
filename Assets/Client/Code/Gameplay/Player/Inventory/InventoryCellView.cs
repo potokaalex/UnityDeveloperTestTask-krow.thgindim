@@ -34,7 +34,8 @@ namespace Client.Code.Gameplay.Player.Inventory
         {
             Icon.sprite = item.Config.Icon;
             Icon.color = Color.white;
-            CountText.SetText(item.Count.ToString());
+            if (item.Count > 1)
+                CountText.SetText(item.Count.ToString());
         }
 
         public void Clear()

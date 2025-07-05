@@ -14,16 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: hammer
   ToInventory:
-    Item: {fileID: 11400000, guid: 8da2c80300641f04588bba38d396a874, type: 2}
+    Config: {fileID: 11400000, guid: 8da2c80300641f04588bba38d396a874, type: 2}
     Count: 1
   ToWallet:
-    Item: {fileID: 0}
+    Config: {fileID: 0}
     Count: 0
   Price:
-    Item: {fileID: 11400000, guid: 8386ad06bbbbb4241b779c05ebbfb781, type: 2}
+    Config: {fileID: 11400000, guid: 8386ad06bbbbb4241b779c05ebbfb781, type: 2}
     Count: 1
   Name: Hammer
   Description: 'used for upgrades and crafts.
 
     disappears after purchase'
   IsCurrency: 0
+  IsEndless: 1
