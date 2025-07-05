@@ -5,6 +5,7 @@ using Client.Code.Core.Progress;
 using Client.Code.Core.Scene;
 using Client.Code.Core.ServiceLocatorCode;
 using Client.Code.Core.Settings;
+using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Customer;
 using Client.Code.Gameplay.CustomerZone;
 using Client.Code.Gameplay.Home;
@@ -12,7 +13,6 @@ using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
-using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
 using Client.Code.Gameplay.Shop;
 
@@ -51,9 +51,8 @@ namespace Client.Code.Gameplay
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
             HomeWindow.Construct(CustomerZoneController, playerScore, gameplayManager, SettingsWindow, ShopWindow, playerWallet);
-            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet,
-                currencyProvider);
-            ShopWindow.Construct(shopController, currencyProvider);
+            var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
+            ShopWindow.Construct(shopController);
 
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);

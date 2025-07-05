@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: gem
   ToInventory:
-    Item: {fileID: 11400000, guid: 49887ccdad103b9439489e47c4cbf25e, type: 2}
+    Item: {fileID: 0}
     Count: 0
   ToWallet:
-    Type: 2
+    Item: {fileID: 11400000, guid: 8386ad06bbbbb4241b779c05ebbfb781, type: 2}
     Count: 1
   Price:
-    Type: 1
+    Item: {fileID: 11400000, guid: 929e4811b870cfc4f8bc75d71984e0bb, type: 2}
     Count: 2
   Name: Gem
   Description: used for upgrades and crafts.

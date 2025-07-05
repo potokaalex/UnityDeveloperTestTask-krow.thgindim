@@ -1,8 +1,8 @@
 ﻿using Client.Code.Core.Progress;
 using Client.Code.Core.Rx;
+using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
-using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.Shop
@@ -14,17 +14,15 @@ namespace Client.Code.Gameplay.Shop
         private readonly PlayerWallet _playerWallet;
         private readonly IProgressProvider _progressProvider;
         private readonly PlayerScore _playerScore;
-        private readonly CurrencyProvider _currencyProvider;
 
         public ShopItemController(ShopItemConfig config, PlayerInventory playerInventory, PlayerWallet playerWallet,
-            IProgressProvider progressProvider, PlayerScore playerScore, CurrencyProvider currencyProvider)
+            IProgressProvider progressProvider, PlayerScore playerScore)
         {
             _config = config;
             _playerInventory = playerInventory;
             _playerWallet = playerWallet;
             _progressProvider = progressProvider;
             _playerScore = playerScore;
-            _currencyProvider = currencyProvider;
         }
 
         public bool IsPurchased { get; private set; }
@@ -35,7 +33,7 @@ namespace Client.Code.Gameplay.Shop
 
         public bool IsCurrency => _config.IsCurrency;
 
-        public Sprite Icon => _config.IsCurrency ? _currencyProvider.GetConfig(_config.ToWallet.Type).Icon : _config.ToInventory.Item.Icon;
+        public Sprite Icon => _config.IsCurrency ? _config.ToWallet.Item.Icon : _config.ToInventory.Item.Icon;
 
         public string Name => _config.Name;
 

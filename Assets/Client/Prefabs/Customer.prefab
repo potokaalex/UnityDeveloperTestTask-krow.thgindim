@@ -78,7 +78,7 @@ MonoBehaviour:
   CreateOrderTime: 5
   EatTime: 5
   MoneyPayed:
-    Type: 1
+    Item: {fileID: 11400000, guid: 929e4811b870cfc4f8bc75d71984e0bb, type: 2}
     Count: 1
 --- !u!1 &1171761339202723853
 GameObject:

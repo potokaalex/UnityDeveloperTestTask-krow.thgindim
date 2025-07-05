@@ -1,7 +1,6 @@
 ﻿using Client.Code.Core.Dispose;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
-using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.Shop
@@ -14,13 +13,8 @@ namespace Client.Code.Gameplay.Shop
         public ButtonView CloseButton;
         private readonly CompositeDisposable _disposables = new();
         private ShopController _shopController;
-        private CurrencyProvider _currencyProvider;
 
-        public void Construct(ShopController shopController, CurrencyProvider currencyProvider)
-        {
-            _shopController = shopController;
-            _currencyProvider = currencyProvider;
-        }
+        public void Construct(ShopController shopController) => _shopController = shopController;
 
         public override void Initialize()
         {
@@ -31,7 +25,7 @@ namespace Client.Code.Gameplay.Shop
                 if (!controller.IsPurchased)
                 {
                     var view = Instantiate(ItemViewPrefab, controller.IsCurrency ? CurrenciesRoot : OthersRoot);
-                    view.Initialize(controller, _currencyProvider);
+                    view.Initialize(controller);
                     view.AddTo(_disposables);
                 }
             }

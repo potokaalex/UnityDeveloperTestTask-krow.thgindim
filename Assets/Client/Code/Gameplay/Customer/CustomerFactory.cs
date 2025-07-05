@@ -1,8 +1,6 @@
 ﻿using Client.Code.Core.ServiceLocatorCode;
 using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
-using Client.Code.Gameplay.Player.Inventory;
-using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 

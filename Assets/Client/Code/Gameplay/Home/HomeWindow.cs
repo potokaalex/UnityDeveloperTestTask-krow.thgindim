@@ -1,11 +1,9 @@
 ﻿using Client.Code.Core.Dispose;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
+using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.CustomerZone;
-using Client.Code.Gameplay.Item;
 using Client.Code.Gameplay.Player;
-using Client.Code.Gameplay.Player.Inventory;
-using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Shop;
 using TMPro;
 using UnityEngine;

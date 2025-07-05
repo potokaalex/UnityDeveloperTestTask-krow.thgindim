@@ -27,7 +27,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 84356fb60a1583f43bc5b7f2c8defb8f, type: 2}
   - {fileID: 11400000, guid: 5860d9509e82a864088bbd23d82f3633, type: 2}
   CurrencyItems:
-  - Type: 1
-    Icon: {fileID: -4592095305834777055, guid: a5e15db1384d7b54a9485ae4b9c22cef, type: 3}
-  - Type: 2
-    Icon: {fileID: -5821098215714624906, guid: aa0422cf1c09b344a9a411fc1cba743e, type: 3}
+  - {fileID: 11400000, guid: 929e4811b870cfc4f8bc75d71984e0bb, type: 2}
+  - {fileID: 11400000, guid: 8386ad06bbbbb4241b779c05ebbfb781, type: 2}

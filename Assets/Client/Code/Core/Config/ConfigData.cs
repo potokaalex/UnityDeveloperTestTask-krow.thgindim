@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Client.Code.Core.Scene;
+using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Item;
-using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Shop;
 using UnityEngine;
 
