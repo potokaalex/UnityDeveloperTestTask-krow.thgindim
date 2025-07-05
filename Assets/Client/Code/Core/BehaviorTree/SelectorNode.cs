@@ -7,7 +7,7 @@ namespace Client.Code.Core.BehaviorTree
         private readonly List<INode> _children;
 
         public SelectorNode(params INode[] children) => _children = new(children);
-        
+
         public NodeState Tick()
         {
             foreach (var child in _children)

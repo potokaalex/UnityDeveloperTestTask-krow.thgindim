@@ -21,7 +21,7 @@ namespace Client.Code.Gameplay.Building
         }
 
         public void Dispose() => _disposable.Dispose();
-        
+
         public void Setup()
         {
             _canView = true;
@@ -29,7 +29,7 @@ namespace Client.Code.Gameplay.Building
         }
 
         public void Clear() => _canView = false;
-        
+
         private void UpdateView()
         {
             gameObject.SetActive(!_controller.IsBuilt);

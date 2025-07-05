@@ -12,13 +12,13 @@ namespace Client.Code.Gameplay.Craft
         private void OnValidate()
         {
             var maxInItems = 3;
-            
+
             if (InItems.Length > maxInItems)
             {
                 var inItems = new ItemAmount[3];
-                for (var i = 0; i < maxInItems; i++) 
+                for (var i = 0; i < maxInItems; i++)
                     inItems[i] = InItems[i];
-                
+
                 InItems = inItems;
                 Debug.LogWarning($"Maximum {nameof(InItems)} count is {maxInItems}.");
             }

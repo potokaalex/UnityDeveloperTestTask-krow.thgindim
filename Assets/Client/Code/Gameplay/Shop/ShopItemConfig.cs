@@ -15,7 +15,7 @@ namespace Client.Code.Gameplay.Shop
         [TextArea] public string Description;
         public bool IsCurrency;
         public bool IsEndless;
-        
+
         private void OnValidate()
         {
             if (IsCurrency)
@@ -26,7 +26,7 @@ namespace Client.Code.Gameplay.Shop
                     ToInventory.Config = null;
                 }
             }
-            else if(ToWallet.Config)
+            else if (ToWallet.Config)
             {
                 Debug.LogWarning($"Cant use {nameof(ToWallet)} when not IsCurrency");
                 ToWallet.Config = null;

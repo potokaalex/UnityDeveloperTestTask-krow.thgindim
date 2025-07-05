@@ -42,7 +42,7 @@ namespace Client.Code.Gameplay.CustomerZone
             for (var i = 0; i < Tables.Count; i++)
                 Tables[i].Initialize();
         }
-        
+
         public bool HasEmpty() => Tables.Any(x => x.IsEmpty && x.IsAlive);
 
         public CustomerTableController ReserveEmpty()

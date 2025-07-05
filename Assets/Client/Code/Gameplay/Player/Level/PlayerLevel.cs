@@ -30,7 +30,7 @@ namespace Client.Code.Gameplay.Player.Level
         public int Next => Current + 1;
 
         public EventAction OnChanged { get; } = new();
-        
+
         public EventAction OnLevelChanged { get; } = new();
 
         public CurrencyAmount LevelUpReward => _currencyFactory.CreateAmount(CurrencyType.Gem, 1);

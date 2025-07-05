@@ -67,7 +67,7 @@ namespace Client.Code.Gameplay
             var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
             ShopWindow.Construct(shopController);
             PlayerLevelCongratulationWindow.Construct(playerLevel);
-            
+
             //bind
             Locator.Register<PlayerInventory>(playerInventory).AddTo(_disposables);
             Locator.Register<PlayerWallet>(playerWallet).AddTo(_disposables);

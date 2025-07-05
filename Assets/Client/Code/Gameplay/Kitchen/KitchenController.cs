@@ -24,18 +24,19 @@ namespace Client.Code.Gameplay.Kitchen
         public int Level { get; private set; }
 
         public EventAction OnInteract { get; } = new();
-        
+
         public EventAction OnLevelChanged { get; } = new();
 
         public CurrencyAmount Price => _currencyFactory.CreateAmount(CurrencyType.Gem, PriceCount);
 
         private int PriceCount => (int)(10f - 9f * Mathf.Exp(-0.05f * (Level - 1)));
-        
+
         public float CookingTime => GetCookingTime(Level);
 
-        public float CookingTimeUpgradeGrowth => GetCookingTime(Level + 1) - CookingTime; 
+        public float CookingTimeUpgradeGrowth => GetCookingTime(Level + 1) - CookingTime;
 
-        public void Construct(CameraController cameraController, PlayerWallet playerWallet, IProgressProvider progressProvider, CurrencyFactory currencyFactory)
+        public void Construct(CameraController cameraController, PlayerWallet playerWallet, IProgressProvider progressProvider,
+            CurrencyFactory currencyFactory)
         {
             _currencyFactory = currencyFactory;
             _progressProvider = progressProvider;
@@ -82,11 +83,11 @@ namespace Client.Code.Gameplay.Kitchen
                 OnLevelChanged.Invoke();
             }
         }
-        
+
         public void Interact() => OnInteract.Invoke();
 
         public void OnWrite(ProgressData progress) => progress.Restaurant.KitchenLevel = Level;
-        
+
         private float GetCookingTime(int level) => 1f + 4f * Mathf.Exp(-0.05f * (level - 1));
     }
 }

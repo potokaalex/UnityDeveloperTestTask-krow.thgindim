@@ -80,7 +80,7 @@ namespace Client.Code.Gameplay.Player.Inventory
         {
             outList.Clear();
             foreach (var item in _items)
-                if(item.Valid)
+                if (item.Valid)
                     outList.Add(item);
         }
 
@@ -94,16 +94,16 @@ namespace Client.Code.Gameplay.Player.Inventory
         public void Move(int fromCell, int toCell)
         {
             var fromItem = new InventoryItem();
-            if (TryGetItemInCell(fromCell, out var fromIndex)) 
+            if (TryGetItemInCell(fromCell, out var fromIndex))
                 fromItem = _items[fromIndex];
 
             var toItem = new InventoryItem();
-            if (TryGetItemInCell(toCell, out var toIndex)) 
+            if (TryGetItemInCell(toCell, out var toIndex))
                 toItem = _items[toIndex];
-            
-            if(fromItem.Valid)
+
+            if (fromItem.Valid)
                 _items[fromIndex] = new InventoryItem(fromItem.Config, fromItem.Count, toCell);
-            if(toItem.Valid)
+            if (toItem.Valid)
                 _items[toIndex] = new InventoryItem(toItem.Config, toItem.Count, fromCell);
 
             if (fromItem.Valid || toItem.Valid)

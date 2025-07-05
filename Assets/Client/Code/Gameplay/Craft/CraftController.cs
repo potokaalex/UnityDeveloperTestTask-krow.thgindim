@@ -21,10 +21,10 @@ namespace Client.Code.Gameplay.Craft
 
         public void Initialize()
         {
-            foreach (var config in _configsProvider.Data.CraftItems) 
+            foreach (var config in _configsProvider.Data.CraftItems)
                 _controllers.Add(new CraftItemController(config, _playerInventory, _playerScore));
         }
-        
+
         public void GetAll(List<CraftItemController> outList)
         {
             outList.Clear();
