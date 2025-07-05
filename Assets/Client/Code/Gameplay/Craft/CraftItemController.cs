@@ -32,8 +32,9 @@ namespace Client.Code.Gameplay.Craft
                 if (!_playerInventory.Has(inItem))
                     return false;
 
-            foreach (var inItem in _config.InItems) 
+            foreach (var inItem in _config.InItems)
                 _playerInventory.Remove(inItem);
+
             _playerInventory.Add(OutItem);
             _playerScore.Add(5);
             return true;

@@ -23,7 +23,7 @@ namespace Client.Code.Gameplay.Craft
         }
 
         public void Dispose() => _disposables.Dispose();
-        
+
         private void TryCraft() => _controller.TryCraft();
 
         private void View()

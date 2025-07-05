@@ -7,7 +7,8 @@ namespace Client.Code.Gameplay.Craft
 {
     public class CraftPanel : MonoBehaviour, IDisposable
     {
-        public CraftItemView ItemView; //Of course, I should to display a list of crafts, but I don't have much time.
+        public Transform ItemsRoot;
+        public CraftItemView ItemViewPrefab;
         private CraftController _craftController;
         private readonly CompositeDisposable _disposables = new();
 
@@ -20,11 +21,9 @@ namespace Client.Code.Gameplay.Craft
 
             for (var i = 0; i < controllers.Count; i++)
             {
-                if (i < 1)
-                {
-                    ItemView.Initialize(controllers[i]);
-                    ItemView.AddTo(_disposables);
-                }
+                var view = Instantiate(ItemViewPrefab, ItemsRoot);
+                view.Initialize(controllers[i]);
+                view.AddTo(_disposables);
             }
         }
 
