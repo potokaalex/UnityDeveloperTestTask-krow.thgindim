@@ -1,6 +1,7 @@
 ﻿using Client.Code.Core.Dispose;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
+using Client.Code.Gameplay.Building;
 using Client.Code.Gameplay.Player.Inventory;
 using Client.Code.Gameplay.Player.Level;
 using Client.Code.Gameplay.Player.Wallet;
@@ -23,10 +24,12 @@ namespace Client.Code.Gameplay.Home
         private SettingsWindow _settingsWindow;
         private ShopWindow _shopWindow;
         private InventoryWindow _inventoryWindow;
+        private BuildingWindow _buildingWindow;
 
         public void Construct(GameplayManager gameplayManager, SettingsWindow settingsWindow, ShopWindow shopWindow, InventoryWindow inventoryWindow,
-            PlayerLevel playerLevel, PlayerWallet playerWallet)
+            PlayerLevel playerLevel, PlayerWallet playerWallet, BuildingWindow buildingWindow)
         {
+            _buildingWindow = buildingWindow;
             _inventoryWindow = inventoryWindow;
             _gameplayManager = gameplayManager;
             _settingsWindow = settingsWindow;
@@ -37,7 +40,7 @@ namespace Client.Code.Gameplay.Home
 
         public void Initialize()
         {
-            OpenBuildingButton.OnClick.Subscribe(() => Debug.Log("Open building")).AddTo(_disposable);
+            OpenBuildingButton.OnClick.Subscribe(_buildingWindow.Open).AddTo(_disposable);
             LoadMainMenuButton.OnClick.Subscribe(_gameplayManager.LoadMainMenu).AddTo(_disposable);
             OpenSettingsButton.OnClick.Subscribe(_settingsWindow.Open).AddTo(_disposable);
             OpenShopButton.OnClick.Subscribe(_shopWindow.Open).AddTo(_disposable);

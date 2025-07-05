@@ -9,10 +9,14 @@ namespace Client.Code.Gameplay.Currency
         public Image Icon;
         public TextMeshProUGUI Count;
 
-        public void View(CurrencyItem item)
+        public void View(CurrencyAmount amount) => View(amount.Config.Icon, amount.Count);
+
+        public void View(CurrencyItem item) => View(item.Icon, item.Count);
+
+        private void View(Sprite icon, int count)
         {
-            Icon.sprite = item.Icon;
-            Count.SetText(item.Count.ToString());
+            Icon.sprite = icon;
+            Count.SetText(count.ToString());
         }
     }
 }

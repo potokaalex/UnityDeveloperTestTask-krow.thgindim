@@ -13,18 +13,22 @@ namespace Client.Code.Gameplay.CustomerZone
     public class CustomerZoneController : MonoBehaviour, IProgressWriter
     {
         public List<CustomerTableController> Tables;
-        public CurrencyAmount TableBuildPrice;
         private PlayerScore _playerScore;
         private PlayerWallet _playerWallet;
+        private CurrencyFactory _currencyFactory;
 
-        public int TablesAliveCount => Tables.Count(x => x.IsAlive);
+        public int TablesBuiltCount => Tables.Count(x => x.IsAlive);
 
         public int TablesMaxCount => Tables.Count;
 
+        public CurrencyAmount TableBuildPrice =>
+            _currencyFactory.CreateAmount(CurrencyType.Cash, (int)Mathf.Pow(2, TablesBuiltCount - 1));
+        
         public EventAction OnTableBuild { get; } = new();
 
-        public void Construct(IProgressProvider progressProvider, PlayerScore playerScore, PlayerWallet playerWallet)
+        public void Construct(IProgressProvider progressProvider, PlayerScore playerScore, PlayerWallet playerWallet, CurrencyFactory currencyFactory)
         {
+            _currencyFactory = currencyFactory;
             _playerWallet = playerWallet;
             _playerScore = playerScore;
             for (var i = 0; i < Tables.Count; i++)
@@ -46,9 +50,9 @@ namespace Client.Code.Gameplay.CustomerZone
             return table;
         }
 
-        public void BuildTable()
+        public void TryBuildTable()
         {
-            if (TablesAliveCount < TablesMaxCount && _playerWallet.Remove(TableBuildPrice))
+            if (TablesBuiltCount < TablesMaxCount && _playerWallet.Remove(TableBuildPrice))
             {
                 Tables.First(x => !x.IsAlive).Build();
                 _playerScore.Add(3);

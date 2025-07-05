@@ -5,6 +5,7 @@ using Client.Code.Core.Progress;
 using Client.Code.Core.Scene;
 using Client.Code.Core.ServiceLocatorCode;
 using Client.Code.Core.Settings;
+using Client.Code.Gameplay.Building;
 using Client.Code.Gameplay.Craft;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Customer;
@@ -33,6 +34,7 @@ namespace Client.Code.Gameplay
         public ShopWindow ShopWindow;
         public InventoryWindow InventoryWindow;
         public PlayerLevelCongratulationWindow PlayerLevelCongratulationWindow;
+        public BuildingWindow BuildingWindow;
         private CustomersToRestaurantSender _customersToRestaurantSender;
         private PlayerRaycaster _playerRaycaster;
         private readonly CompositeDisposable _disposables = new();
@@ -53,12 +55,13 @@ namespace Client.Code.Gameplay
             var customerFactory = new CustomerFactory(Locator);
             CustomerSpawner.Construct(customerFactory);
             _customersToRestaurantSender = new CustomersToRestaurantSender(customerContainer, CustomerZoneController);
-            CustomerZoneController.Construct(progressController, playerScore, playerWallet);
+            CustomerZoneController.Construct(progressController, playerScore, playerWallet, currencyFactory);
             _playerRaycaster = new PlayerRaycaster(CameraController);
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
             InventoryWindow.Construct(playerInventory, craftController);
-            HomeWindow.Construct(gameplayManager, SettingsWindow, ShopWindow, InventoryWindow, playerLevel, playerWallet);
+            BuildingWindow.Construct(CustomerZoneController);
+            HomeWindow.Construct(gameplayManager, SettingsWindow, ShopWindow, InventoryWindow, playerLevel, playerWallet, BuildingWindow);
             var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
             ShopWindow.Construct(shopController);
             PlayerLevelCongratulationWindow.Construct(playerLevel);
@@ -89,6 +92,7 @@ namespace Client.Code.Gameplay
             SettingsWindow.Initialize();
             InventoryWindow.Initialize();
             HomeWindow.Initialize();
+            BuildingWindow.Initialize();
             shopController.Initialize();
             ShopWindow.Initialize();
             PlayerLevelCongratulationWindow.Initialize();
@@ -100,6 +104,7 @@ namespace Client.Code.Gameplay
             InventoryWindow.Dispose();
             HomeWindow.Dispose();
             ShopWindow.Dispose();
+            BuildingWindow.Dispose();
             _disposables.Dispose();
             PlayerLevelCongratulationWindow.Dispose();
         }
