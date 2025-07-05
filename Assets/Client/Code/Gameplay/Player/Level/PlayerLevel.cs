@@ -2,6 +2,7 @@
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
 using Client.Code.Gameplay.Currency;
+using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.Player.Level

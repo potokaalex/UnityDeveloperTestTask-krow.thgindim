@@ -4,6 +4,7 @@ using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
+using Client.Code.Gameplay.Player.Wallet;
 
 namespace Client.Code.Gameplay.Shop
 {

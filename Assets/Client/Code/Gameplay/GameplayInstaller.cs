@@ -15,6 +15,7 @@ using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
 using Client.Code.Gameplay.Player.Level;
+using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
 using Client.Code.Gameplay.Shop;
 
@@ -57,7 +58,7 @@ namespace Client.Code.Gameplay
             var gameplayManager = new GameplayManager(Locator.Get<SceneLoader>(), progressController);
             SettingsWindow.Construct(Locator.Get<AudioController>());
             InventoryWindow.Construct(playerInventory, craftController);
-            HomeWindow.Construct(CustomerZoneController, gameplayManager, SettingsWindow, ShopWindow, playerWallet, InventoryWindow, playerLevel);
+            HomeWindow.Construct(gameplayManager, SettingsWindow, ShopWindow, InventoryWindow, playerLevel, playerWallet);
             var shopController = new ShopController(Locator.Get<IConfigsProvider>(), playerInventory, progressController, playerScore, playerWallet);
             ShopWindow.Construct(shopController);
             PlayerLevelCongratulationWindow.Construct(playerLevel);
