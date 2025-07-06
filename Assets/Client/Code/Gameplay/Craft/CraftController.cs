@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Client.Code.Core.Config;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Inventory;
 
 namespace Client.Code.Gameplay.Craft
 {
-    public class CraftController
+    public class CraftController : IInitializable
     {
         private readonly List<CraftItemController> _controllers = new();
         private readonly IConfigsProvider _configsProvider;

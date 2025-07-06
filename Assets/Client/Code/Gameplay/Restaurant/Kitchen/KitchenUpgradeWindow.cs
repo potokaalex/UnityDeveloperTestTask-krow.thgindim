@@ -1,12 +1,14 @@
-﻿using Client.Code.Core.Dispose;
+﻿using System;
+using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.Currency;
 using TMPro;
 
-namespace Client.Code.Gameplay.Kitchen
+namespace Client.Code.Gameplay.Restaurant.Kitchen
 {
-    public class KitchenUpgradeWindow : WindowView
+    public class KitchenUpgradeWindow : WindowView, IInitializable, IDisposable
     {
         public ButtonView CloseButton;
         public TextMeshProUGUI LevelText;

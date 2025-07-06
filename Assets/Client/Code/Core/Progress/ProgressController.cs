@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Progress.Actors;
 using UnityEngine;
 
 namespace Client.Code.Core.Progress
 {
-    public class ProgressController : IProgressProvider
+    public class ProgressController : IProgressProvider, IInitializable, IOnApplicationFocusReceiver
     {
         private const string FilesExtension = "data";
         private const string SaveFolderName = "Saves";
@@ -30,7 +31,7 @@ namespace Client.Code.Core.Progress
                 Save();
         }
 
-        public IDisposable RegisterActor(IProgressActor actor)
+        public IDisposable Register(IProgressActor actor)
         {
             if (actor is IProgressWriter writer)
                 _writers.Add(writer);

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Client.Code.Gameplay.CustomerZone
+namespace Client.Code.Gameplay.Restaurant.CustomerZone
 {
     [Serializable]
     public struct CustomerTableProgressData

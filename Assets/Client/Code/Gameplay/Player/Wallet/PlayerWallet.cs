@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
@@ -6,7 +7,7 @@ using Client.Code.Gameplay.Currency;
 
 namespace Client.Code.Gameplay.Player.Wallet
 {
-    public class PlayerWallet : IProgressWriter
+    public class PlayerWallet : IProgressWriter, IInitializable
     {
         private readonly Dictionary<CurrencyType, CurrencyItem> _items = new();
         private readonly IProgressProvider _progressProvider;
@@ -40,7 +41,6 @@ namespace Client.Code.Gameplay.Player.Wallet
         }
 
         public CurrencyItem Get(CurrencyConfig config) => Get(config.Type);
-
 
         public CurrencyItem Get(CurrencyType type)
         {

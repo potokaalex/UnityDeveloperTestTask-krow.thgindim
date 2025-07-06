@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
@@ -6,7 +7,7 @@ using Client.Code.Gameplay.Item;
 
 namespace Client.Code.Gameplay.Player.Inventory
 {
-    public class PlayerInventory : IProgressWriter
+    public class PlayerInventory : IProgressWriter, IInitializable
     {
         private readonly IProgressProvider _progressProvider;
         private readonly ItemsProvider _itemsProvider;

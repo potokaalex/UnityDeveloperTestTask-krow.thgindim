@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Client.Code.Core;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
@@ -9,9 +10,9 @@ using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
-namespace Client.Code.Gameplay.Kitchen
+namespace Client.Code.Gameplay.Restaurant.Kitchen
 {
-    public class KitchenController : MonoBehaviour, IProgressWriter, IPlayerInteractive
+    public class KitchenController : MonoBehaviour, IProgressWriter, IPlayerInteractive, IInitializable, ITickable
     {
         public Transform CooksPoint;
         public TimerView TimerView;
@@ -50,7 +51,7 @@ namespace Client.Code.Gameplay.Kitchen
             TimerView.Hide();
         }
 
-        public void Update()
+        public void Tick()
         {
             if (_orders.Count > 0)
             {

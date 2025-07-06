@@ -1,11 +1,13 @@
-﻿using Client.Code.Core.Dispose;
+﻿using System;
+using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
 using UnityEngine.UI;
 
 namespace Client.Code.Gameplay.Player.Level
 {
-    public class PlayerLevelCongratulationWindow : WindowView
+    public class PlayerLevelCongratulationWindow : WindowView, IInitializable, IDisposable
     {
         public ButtonView CloseButton;
         public Image Icon;

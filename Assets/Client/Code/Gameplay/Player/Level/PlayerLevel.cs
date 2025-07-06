@@ -1,4 +1,5 @@
-﻿using Client.Code.Core.Progress;
+﻿using Client.Code.Core.LifeTime.Events;
+using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
 using Client.Code.Gameplay.Currency;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Client.Code.Gameplay.Player.Level
 {
-    public class PlayerLevel : IProgressWriter
+    public class PlayerLevel : IProgressWriter, IInitializable
     {
         private const float FirstLevelProgress = 5;
         private readonly IProgressProvider _progressProvider;

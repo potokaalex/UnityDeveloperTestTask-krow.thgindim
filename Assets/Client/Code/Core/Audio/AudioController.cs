@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Core.Rx;
@@ -7,7 +8,7 @@ using UnityEngine.Audio;
 
 namespace Client.Code.Core.Audio
 {
-    public class AudioController : MonoBehaviour, IProgressWriter
+    public class AudioController : MonoBehaviour, IInitializable, IProgressWriter
     {
         private IProgressProvider _progressProvider;
         public AudioMixerGroup MasterMixer;

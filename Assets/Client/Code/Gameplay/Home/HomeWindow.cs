@@ -1,4 +1,6 @@
-﻿using Client.Code.Core.Dispose;
+﻿using System;
+using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.Building;
@@ -10,7 +12,7 @@ using UnityEngine;
 
 namespace Client.Code.Gameplay.Home
 {
-    public class HomeWindow : MonoBehaviour
+    public class HomeWindow : MonoBehaviour, IInitializable, IDisposable
     {
         public ButtonView OpenBuildingButton;
         public ButtonView OpenShopButton;

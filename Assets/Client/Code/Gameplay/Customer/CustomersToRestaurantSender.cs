@@ -1,10 +1,11 @@
-﻿using Client.Code.Gameplay.CustomerZone;
+﻿using Client.Code.Core.LifeTime.Events;
+using Client.Code.Gameplay.Restaurant.CustomerZone;
 using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Client.Code.Gameplay.Customer
 {
-    public class CustomersToRestaurantSender
+    public class CustomersToRestaurantSender : ITickable
     {
         private readonly CustomersContainer _container;
         private readonly CustomerZoneController _customerZoneController;

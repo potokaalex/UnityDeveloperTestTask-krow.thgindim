@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.Craft;
@@ -8,7 +10,7 @@ using UnityEngine.Pool;
 
 namespace Client.Code.Gameplay.Player.Inventory
 {
-    public class InventoryWindow : WindowView
+    public class InventoryWindow : WindowView, IInitializable, IDisposable
     {
         public ButtonView ExitButton;
         public InventoryCellView CellPrefab;

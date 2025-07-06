@@ -3,11 +3,11 @@ using Client.Code.Core;
 using Client.Code.Core.BehaviorTree;
 using Client.Code.Core.UI;
 using Client.Code.Gameplay.Currency;
-using Client.Code.Gameplay.CustomerZone;
-using Client.Code.Gameplay.Kitchen;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Wallet;
 using Client.Code.Gameplay.Restaurant;
+using Client.Code.Gameplay.Restaurant.CustomerZone;
+using Client.Code.Gameplay.Restaurant.Kitchen;
 using UnityEngine;
 using UnityEngine.AI;
 

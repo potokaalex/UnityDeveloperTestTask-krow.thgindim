@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Client.Code.Core.Config;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Gameplay.Player;
@@ -8,7 +9,7 @@ using Client.Code.Gameplay.Player.Wallet;
 
 namespace Client.Code.Gameplay.Shop
 {
-    public class ShopController : IProgressWriter
+    public class ShopController : IProgressWriter, IInitializable
     {
         private readonly IConfigsProvider _configsProvider;
         private readonly PlayerInventory _playerInventory;

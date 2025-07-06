@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Client.Code.Core.LifeTime.Events;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Client.Code.Gameplay.Player
 {
-    public class PlayerRaycaster
+    public class PlayerRaycaster : ITickable
     {
         private readonly CameraController _cameraController;
 

@@ -1,11 +1,13 @@
-﻿using Client.Code.Core.Dispose;
+﻿using System;
+using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
 using UnityEngine;
 
 namespace Client.Code.Gameplay.Shop
 {
-    public class ShopWindow : WindowView
+    public class ShopWindow : WindowView, IInitializable, IDisposable
     {
         public Transform CurrenciesRoot;
         public Transform OthersRoot;

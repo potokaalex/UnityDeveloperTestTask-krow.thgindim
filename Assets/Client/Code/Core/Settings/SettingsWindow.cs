@@ -1,11 +1,13 @@
-﻿using Client.Code.Core.Audio;
+﻿using System;
+using Client.Code.Core.Audio;
 using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.UI;
 using UnityEngine.UI;
 
 namespace Client.Code.Core.Settings
 {
-    public class SettingsWindow : WindowView
+    public class SettingsWindow : WindowView, IInitializable, IDisposable
     {
         public Slider AudioSlider;
         public ButtonView ExitButton;

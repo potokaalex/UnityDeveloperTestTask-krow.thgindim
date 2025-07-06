@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Client.Code.Core.LifeTime.Events;
+using UnityEngine;
 
 namespace Client.Code.Gameplay.Customer
 {
-    public class CustomerSpawner : MonoBehaviour
+    public class CustomerSpawner : MonoBehaviour, IInitializable
     {
         public Vector2 AreaSize;
         public CustomerController Prefab;

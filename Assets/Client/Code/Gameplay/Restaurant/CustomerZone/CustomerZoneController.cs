@@ -1,13 +1,14 @@
-﻿using Client.Code.Core.Progress;
+﻿using Client.Code.Core.LifeTime.Events;
+using Client.Code.Core.Progress;
 using Client.Code.Core.Progress.Actors;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Wallet;
 using UnityEngine;
 
-namespace Client.Code.Gameplay.CustomerZone
+namespace Client.Code.Gameplay.Restaurant.CustomerZone
 {
-    public class CustomerZoneController : MonoBehaviour, IProgressWriter
+    public class CustomerZoneController : MonoBehaviour, IProgressWriter, IInitializable
     {
         public CustomerTablesController Tables;
         public CustomerReceptionTable ReceptionTable;

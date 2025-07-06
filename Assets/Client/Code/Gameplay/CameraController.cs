@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Client.Code.Core.LifeTime.Events;
+using UnityEngine;
 
 namespace Client.Code.Gameplay
 {
-    public class CameraController : MonoBehaviour
+    public class CameraController : MonoBehaviour, ITickable
     {
         public Camera Camera;
         public float PositionVelocity;
@@ -14,7 +15,7 @@ namespace Client.Code.Gameplay
         private float _scrollDelta;
         private Vector2 _positionDirection;
 
-        public void Update() => WriteInputs();
+        public void Tick() => WriteInputs();
 
         public void LateUpdate()
         {

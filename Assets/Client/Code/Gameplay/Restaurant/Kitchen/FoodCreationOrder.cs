@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Client.Code.Gameplay.Kitchen
+namespace Client.Code.Gameplay.Restaurant.Kitchen
 {
     public class FoodCreationOrder
     {

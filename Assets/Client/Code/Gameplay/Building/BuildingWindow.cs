@@ -1,11 +1,13 @@
-﻿using Client.Code.Core.Dispose;
+﻿using System;
+using Client.Code.Core.Dispose;
+using Client.Code.Core.LifeTime.Events;
 using Client.Code.Core.Settings;
 using Client.Code.Core.UI;
-using Client.Code.Gameplay.CustomerZone;
+using Client.Code.Gameplay.Restaurant.CustomerZone;
 
 namespace Client.Code.Gameplay.Building
 {
-    public class BuildingWindow : WindowView
+    public class BuildingWindow : WindowView, IInitializable, IDisposable
     {
         public ButtonView CloseButton;
         public BuildingControllerView CustomerTable;

@@ -4,6 +4,7 @@
     {
         public override void Awake()
         {
+            DontDestroyOnLoad(this);
             Locator = new ServiceLocator();
             base.Awake();
         }

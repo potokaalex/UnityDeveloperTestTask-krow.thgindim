@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Client.Code.Gameplay.CustomerZone;
+using Client.Code.Gameplay.Restaurant.CustomerZone;
 
 namespace Client.Code.Gameplay.Restaurant
 {

@@ -4,10 +4,9 @@ using Client.Code.Gameplay.Building;
 using Client.Code.Gameplay.Currency;
 using Client.Code.Gameplay.Player;
 using Client.Code.Gameplay.Player.Wallet;
-using Client.Code.Gameplay.Restaurant;
 using UnityEngine;
 
-namespace Client.Code.Gameplay.CustomerZone
+namespace Client.Code.Gameplay.Restaurant.CustomerZone
 {
     public class CustomerReceptionTable : MonoBehaviour, IBuildingController
     {

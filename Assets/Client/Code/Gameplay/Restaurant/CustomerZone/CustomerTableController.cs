@@ -4,7 +4,7 @@ using Client.Code.Core.Rx;
 using Client.Code.Gameplay.Player;
 using UnityEngine;
 
-namespace Client.Code.Gameplay.CustomerZone
+namespace Client.Code.Gameplay.Restaurant.CustomerZone
 {
     public class CustomerTableController : MonoBehaviour, IPlayerInteractive
     {

@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Client.Code.Core.LifeTime.Events;
+using UnityEngine;
 
 namespace Client.Code.Core.Config
 {
-    public class ConfigsController : IConfigsProvider
+    public class ConfigsController : IConfigsProvider, IInitializable
     {
         private ConfigData _configData;
 
